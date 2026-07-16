@@ -1,0 +1,92 @@
+import {Injectable, inject, signal}   from '@angular/core';
+import { Observable, catchError, map, of, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { jwtDecode } from 'jwt-decode';
+import { IUser } from './interface';
+import { endpoint } from './index';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class Authservice {
+    http=inject(HttpClient);
+    cookieservice=inject(CookieService);
+    router=inject(Router);
+    baseUrl= 'https://melaine-palaeobiologic-savourily.ngrok-free.dev/api';
+    tokenKey = 'token';
+
+    currentUser: IUser | undefined = this.decodeToken();
+    isLoggedIn = signal<boolean>(this.checkToken());
+
+    constructor ()
+    {
+    }
+
+
+getToken(): string | null {
+ return this.cookieservice.get(this.tokenKey);
+}
+
+setToken(token: string): void {
+    this.cookieservice.set(this.tokenKey, token);
+    this.currentUser = this.decodeToken();
+    this.isLoggedIn.set(true);
+}
+
+decodeToken(): IUser | undefined {
+    const token = this.getToken();
+    if (!token) {
+        return undefined;
+    }
+    try {
+        return jwtDecode<IUser>(token);
+    } catch {
+        return undefined;
+    }
+}
+
+checkToken(): boolean {
+    return !!this.getToken();
+}
+
+register(payload: any): Observable<any> {
+    return this.http.post(this.baseUrl+ '/auth/register', payload);
+}
+
+login(payload: any): Observable<any> {
+    return this.http.post(this.baseUrl + '/auth/login', payload);
+}
+
+authenticaion(
+    email: string,
+    password: string) : Observable<string | undefined> {
+        return this.http.post<{token: string; user: IUser}>(`${endpoint.baseUrl}${endpoint.login}`, { email, password }).pipe(
+            tap((response) => {
+                this.setToken(response.token);
+                this.router.navigate(['/']);
+            }),
+            map((response) => response.token),
+            catchError(() => of(undefined))
+        );
+    }
+
+logout(): Observable<any> {
+    return this.http.post(`${endpoint.baseUrl}${endpoint.logout}`, {}).pipe(
+        catchError(() => of(null)),
+        tap(() => {
+            this.clearUserData();
+            this.router.navigate(['/login']);
+        })
+    );
+}
+
+clearUserData(): void {
+    this.cookieservice.delete(this.tokenKey);
+    this.currentUser = undefined;
+    this.isLoggedIn.set(false);
+}
+
+}

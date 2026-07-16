@@ -1,0 +1,14 @@
+<h1>Products</h1>
+
+<ul class="product-list">
+  @for (product of products(); track product.id) {
+    <li class="product-card">
+      <img [src]="product.image" [alt]="product.title" />
+      <h2>{{ product.title }}</h2>
+      <p class="price">{{ product.price | currency }}</p>
+      <p class="category">{{ product.category }}</p>
+    </li>
+  } @empty {
+    <p>Loading products...</p>
+  }
+</ul>
