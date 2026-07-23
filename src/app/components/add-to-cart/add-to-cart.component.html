@@ -1,0 +1,20 @@
+<div class="add-to-cart">
+  <div class="quantity-controls">
+    <button
+      type="button"
+      class="quantity-btn"
+      (click)="decrement()"
+      [disabled]="disabled || quantity() <= 1"
+    >
+      -
+    </button>
+    <span class="quantity-value">{{ quantity() }}</span>
+    <button type="button" class="quantity-btn" (click)="increment()" [disabled]="disabled">
+      +
+    </button>
+  </div>
+
+  <button type="button" class="add-to-cart-btn" (click)="onAddToCart()" [disabled]="disabled">
+    Add to Cart
+  </button>
+</div>

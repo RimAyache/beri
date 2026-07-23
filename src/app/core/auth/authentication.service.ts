@@ -17,8 +17,9 @@ export class Authservice {
     router=inject(Router);
     baseUrl= 'https://melaine-palaeobiologic-savourily.ngrok-free.dev/api';
     tokenKey = 'token';
+    userKey = 'user';
 
-    currentUser: IUser | undefined = this.decodeToken();
+    currentUser: IUser | undefined = this.getUser();
     isLoggedIn = signal<boolean>(this.checkToken());
 
     constructor ()
@@ -30,9 +31,9 @@ getToken(): string | null {
  return this.cookieservice.get(this.tokenKey);
 }
 
-setToken(token: string): void {
+setToken(token: string, user?: IUser): void {
     this.cookieservice.set(this.tokenKey, token);
-    this.currentUser = this.decodeToken();
+    this.currentUser = user ?? this.decodeToken();
     this.isLoggedIn.set(true);
 }
 
@@ -52,20 +53,20 @@ checkToken(): boolean {
     return !!this.getToken();
 }
 
+getUser(): IUser | undefined {
+    return this.decodeToken();
+}
+
 register(payload: any): Observable<any> {
     return this.http.post(this.baseUrl+ '/auth/register', payload);
 }
 
-login(payload: any): Observable<any> {
-    return this.http.post(this.baseUrl + '/auth/login', payload);
-}
-
-authenticaion(
+login(
     email: string,
     password: string) : Observable<string | undefined> {
         return this.http.post<{token: string; user: IUser}>(`${endpoint.baseUrl}${endpoint.login}`, { email, password }).pipe(
             tap((response) => {
-                this.setToken(response.token);
+                this.setToken(response.token, response.user);
                 this.router.navigate(['/']);
             }),
             map((response) => response.token),

@@ -30,7 +30,7 @@ export class LoginComponent {
     }
 
     const { email, password } = this.loginForm.getRawValue();
-    this.authService.authenticaion(email ?? '', password ?? '').subscribe((token) => {
+    this.authService.login(email ?? '', password ?? '').subscribe((token) => {
       if (!token) {
         this.loginError.set('Invalid username or password');
       }
