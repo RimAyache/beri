@@ -1,0 +1,32 @@
+<div class="admin-layout">
+  <aside class="admin-layout__sidebar">
+    <a routerLink="/" class="admin-layout__brand">BERI</a>
+
+    <nav class="admin-layout__nav">
+      <a
+        routerLink="/admin"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="admin-layout__link"
+        title="Products"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="admin-layout__icon" aria-hidden="true">
+          <path d="M3 9l9 -6l9 6" />
+          <path d="M4 10v10a1 1 0 0 0 1 1h4a1 1 0 0 0 1 -1v-5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1 -1v-10" />
+        </svg>
+      </a>
+    </nav>
+
+    <a routerLink="/" class="admin-layout__exit" title="Back to store">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="admin-layout__icon" aria-hidden="true">
+        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+        <path d="M20 12h-13l3 -3" />
+        <path d="M10 15l-3 -3" />
+      </svg>
+    </a>
+  </aside>
+
+  <div class="admin-layout__content">
+    <router-outlet />
+  </div>
+</div>
