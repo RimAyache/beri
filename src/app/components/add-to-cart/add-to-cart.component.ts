@@ -1,11 +1,16 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 
+import { Authservice } from '../../core/auth/authentication.service';
+import { CartService } from '../../core/cart/cart.service';
+import { ToastService } from '../../core/toast/toast.service';
 import { Product } from '../../models/product.model';
 
 export interface AddToCartEvent {
   product: Product;
   quantity: number;
 }
+
+const MAX_QUANTITY = 10;
 
 @Component({
   selector: 'app-add-to-cart',
@@ -18,22 +23,51 @@ export class AddToCartComponent {
 
   @Output() addToCart = new EventEmitter<AddToCartEvent>();
 
-  quantity = signal(1);
+  private authService = inject(Authservice);
+  private cartService = inject(CartService);
+  private toastService = inject(ToastService);
+
+  readonly isLoggedIn = this.authService.isLoggedIn;
+
+  quantity = signal(0);
+  private maxReached = signal(false);
+  private unavailable = signal(false);
+
+  isIncrementDisabled(): boolean {
+    return this.disabled || this.unavailable() || this.maxReached();
+  }
+
+  isDecrementDisabled(): boolean {
+    return this.disabled || this.unavailable();
+  }
 
   increment(): void {
-    this.quantity.update((q) => q + 1);
-  }
-
-  decrement(): void {
-    this.quantity.update((q) => Math.max(1, q - 1));
-  }
-
-  onAddToCart(): void {
-    if (this.disabled) {
+    if (this.isIncrementDisabled()) {
       return;
     }
 
+    if (!this.product.available) {
+      this.unavailable.set(true);
+      this.toastService.show('This item is no longer available.');
+      return;
+    }
+
+    this.quantity.update((q) => q + 1);
+    this.cartService.addItem(this.product, this.quantity()).subscribe();
     this.addToCart.emit({ product: this.product, quantity: this.quantity() });
-    this.quantity.set(1);
+
+    if (this.quantity() >= MAX_QUANTITY) {
+      this.maxReached.set(true);
+      this.toastService.show('You have reached the maximum number of items.');
+    }
+  }
+
+  decrement(): void {
+    if (this.isDecrementDisabled()) {
+      return;
+    }
+
+    this.quantity.update((q) => Math.max(0, q - 1));
+    this.maxReached.set(false);
   }
 }
