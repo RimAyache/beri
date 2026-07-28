@@ -13,7 +13,7 @@
       </a>
     </li>
     <li>
-      <a routerLink="/cart" routerLinkActive="is-active" class="navbar__link">
+      <button type="button" class="navbar__link navbar__link--button" (click)="onCartToggle()">
         <span class="navbar__icon-wrap">
           <svg viewBox="0 0 18 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="navbar__icon" aria-hidden="true">
             <path d="M3 17.3333C3.53043 17.3333 4.03914 17.5792 4.41421 18.0168C4.78929 18.4543 5 19.0478 5 19.6667C5 20.2855 4.78929 20.879 4.41421 21.3166C4.03914 21.7542 3.53043 22 3 22C2.46957 22 1.96086 21.7542 1.58579 21.3166C1.21071 20.879 1 20.2855 1 19.6667C1 19.0478 1.21071 18.4543 1.58579 18.0168C1.96086 17.5792 2.46957 17.3333 3 17.3333ZM3 17.3333H14M3 17.3333V1H1M14 17.3333C14.5304 17.3333 15.0391 17.5792 15.4142 18.0168C15.7893 18.4543 16 19.0478 16 19.6667C16 20.2855 15.7893 20.879 15.4142 21.3166C15.0391 21.7542 14.5304 22 14 22C13.4696 22 12.9609 21.7542 12.5858 21.3166C12.2107 20.879 12 20.2855 12 19.6667C12 19.0478 12.2107 18.4543 12.5858 18.0168C12.9609 17.5792 13.4696 17.3333 14 17.3333ZM3 3.33333L17 4.5L16 12.6667H3" />
@@ -23,7 +23,7 @@
           }
         </span>
         Cart
-      </a>
+      </button>
     </li>
     <li>
       <a routerLink="/about" routerLinkActive="is-active" class="navbar__link">

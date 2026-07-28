@@ -20,4 +20,8 @@ export class NavbarComponent {
   onSignOut(): void {
     this.authService.logout().subscribe();
   }
+
+  onCartToggle(): void {
+    this.cartService.toggleMiniCart();
+  }
 }
