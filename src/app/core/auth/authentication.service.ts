@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
+import { config } from '../../config';
 import { IUser } from './interface';
 import { endpoint } from './index';
 
@@ -15,7 +16,7 @@ export class Authservice {
     http=inject(HttpClient);
     cookieservice=inject(CookieService);
     router=inject(Router);
-    baseUrl= 'https://melaine-palaeobiologic-savourily.ngrok-free.dev/api';
+    baseUrl= config.apiUrl;
     tokenKey = 'token';
     userKey = 'user';
 
@@ -64,7 +65,7 @@ register(payload: any): Observable<any> {
 login(
     email: string,
     password: string) : Observable<string | undefined> {
-        return this.http.post<{token: string; user: IUser}>(`${endpoint.baseUrl}${endpoint.login}`, { email, password }).pipe(
+        return this.http.post<{token: string; user: IUser}>(`${this.baseUrl}${endpoint.login}`, { email, password }).pipe(
             tap((response) => {
                 this.setToken(response.token, response.user);
                 this.router.navigate(['/']);
@@ -75,7 +76,7 @@ login(
     }
 
 logout(): Observable<any> {
-    return this.http.post(`${endpoint.baseUrl}${endpoint.logout}`, {}).pipe(
+    return this.http.post(`${this.baseUrl}${endpoint.logout}`, {}).pipe(
         catchError(() => of(null)),
         tap(() => {
             this.clearUserData();

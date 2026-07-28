@@ -29,7 +29,7 @@ yarn-error.log
 .history/*
 
 # Claude Code local settings
-.claude/settings.local.json
+.claude/
 
 # Miscellaneous
 /.angular/cache
