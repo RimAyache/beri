@@ -1,0 +1,49 @@
+:host {
+  display: block;
+}
+
+.footer {
+  padding: 1.5rem 3rem 2rem;
+}
+
+.footer__separator {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0 0 1.5rem;
+}
+
+.footer__row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.footer__items {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+.footer__item {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.footer__signout {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--color-accent);
+}

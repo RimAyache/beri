@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --color-text: #2e1118;
+  --color-accent: #7b1e3b;
+  --color-accent-light: #c7295d;
+  --color-bg: #ffffff;
+  --color-border: #eee;
+  --color-muted: #838383;
+
+  --font-display: 'Volkhov', serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
