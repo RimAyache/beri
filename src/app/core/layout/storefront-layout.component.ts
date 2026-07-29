@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { NavbarComponent } from '../../components/layout/navbar/navbar.component';
-import { FooterComponent } from '../../components/layout/footer/footer.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 import { MiniCartComponent } from '../../components/mini-cart/mini-cart.component';
 
 @Component({
