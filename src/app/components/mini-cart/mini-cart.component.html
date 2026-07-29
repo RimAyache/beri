@@ -38,7 +38,7 @@
 
       <label class="mini-cart__gift-wrap">
         <input type="checkbox" [checked]="giftWrap()" (change)="toggleGiftWrap()" />
-        For {{ 10 | currency }} please wrap the product
+        For {{ giftWrapPrice | currency }} please wrap the product
       </label>
 
       <div class="mini-cart__subtotal">

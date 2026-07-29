@@ -7,6 +7,8 @@
   --color-bg: #ffffff;
   --color-border: #eee;
   --color-muted: #838383;
+  --color-overlay: rgba(46, 17, 24, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.15);
 
   --font-display: 'Volkhov', serif;
   --font-body: 'Poppins', sans-serif;

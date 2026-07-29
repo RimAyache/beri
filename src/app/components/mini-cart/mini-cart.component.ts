@@ -21,6 +21,7 @@ export class MiniCartComponent {
   readonly subtotal = this.cartService.subtotal;
 
   readonly giftWrap = signal(false);
+  readonly giftWrapPrice = GIFT_WRAP_PRICE;
 
   readonly amountToFreeShipping = computed(() =>
     Math.max(0, FREE_SHIPPING_THRESHOLD - this.subtotal()),
