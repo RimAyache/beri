@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { config } from '../../config';
 import { IUser } from '../../models/user.model';
 import { RegisterRequest, RegisterResponse } from '../../models/auth.model';
-import { endpoint } from './index';
+import { endpoint } from './endpoints';
 
 @Injectable({
   providedIn: 'root'

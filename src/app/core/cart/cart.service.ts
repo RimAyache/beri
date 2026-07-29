@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 
 import { config } from '../../config';
 import { Product } from '../../models/product.model';
-import { CartItem } from '../../models/cart.model';
+import { CartItem, CartItemResponse } from '../../models/cart.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,12 +35,14 @@ export class CartService {
     this.isMiniCartOpen.update((open) => !open);
   }
 
-  addItem(product: Product, quantity: number): Observable<any> {
-    return this.http.post(`${config.apiUrl}/cart`, { productId: product.id, quantity }).pipe(
-      tap(() => {
-        this.setLocalQuantity(product, quantity);
-      }),
-    );
+  addItem(product: Product, quantity: number): Observable<CartItemResponse> {
+    return this.http
+      .post<CartItemResponse>(`${config.apiUrl}/cart`, { productId: product.id, quantity })
+      .pipe(
+        tap(() => {
+          this.setLocalQuantity(product, quantity);
+        }),
+      );
   }
 
   updateQuantity(productId: number, quantity: number): void {
