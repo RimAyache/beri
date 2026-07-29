@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { Authservice } from '../../../core/auth/authentication.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { CartService } from '../../../core/cart/cart.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { CartService } from '../../../core/cart/cart.service';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  private readonly authService = inject(Authservice);
+  private readonly authService = inject(AuthService);
   private readonly cartService = inject(CartService);
 
   readonly isLoggedIn = this.authService.isLoggedIn;

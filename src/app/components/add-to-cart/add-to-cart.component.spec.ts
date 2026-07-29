@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { render, screen, fireEvent } from '@testing-library/angular';
 
-import { Authservice } from '../../core/auth/authentication.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../core/cart/cart.service';
 import { ToastService } from '../../core/toast/toast.service';
 import { Product } from '../../models/product.model';
@@ -28,7 +28,7 @@ describe('AddToCartComponent', () => {
     await render(AddToCartComponent, {
       inputs: { product: options.product ?? mockProduct },
       providers: [
-        { provide: Authservice, useValue: authService },
+        { provide: AuthService, useValue: authService },
         { provide: CartService, useValue: cartService },
         { provide: ToastService, useValue: toastService },
       ],

@@ -1,53 +1,56 @@
 @if (isOpen()) {
-  <div class="mini-cart__backdrop" (click)="close()"></div>
+<div class="mini-cart__backdrop" (click)="close()"></div>
 
-  <aside class="mini-cart">
-    <header class="mini-cart__header">
-      <h2 class="mini-cart__title">Shopping Cart</h2>
-      <button type="button" class="mini-cart__close" (click)="close()" aria-label="Close cart">&times;</button>
-    </header>
+<aside class="mini-cart">
+  <header class="mini-cart__header">
+    <h2 class="mini-cart__title">Shopping Cart</h2>
+    <button type="button" class="mini-cart__close" (click)="close()" aria-label="Close cart">&times;</button>
+  </header>
 
-    @if (items().length === 0) {
-      <p class="mini-cart__empty">Your cart is empty.</p>
-    } @else {
-      @if (amountToFreeShipping() > 0) {
-        <p class="mini-cart__shipping-note">
-          Buy {{ amountToFreeShipping() | currency }} more and get free shipping!
-        </p>
-      } @else {
-        <p class="mini-cart__shipping-note mini-cart__shipping-note--unlocked">You've unlocked free shipping!</p>
-      }
+  @if (items().length === 0) {
+  <p class="mini-cart__empty">Your cart is empty.</p>
+  } @else {
+  @if (amountToFreeShipping() > 0) {
+  <p class="mini-cart__shipping-note">
+    Buy {{ amountToFreeShipping() | currency }} more and get free shipping!
+  </p>
+  } @else {
+  <p class="mini-cart__shipping-note mini-cart__shipping-note--unlocked">You've unlocked free shipping!</p>
+  }
 
-      <ul class="mini-cart__items">
-        @for (item of items(); track item.product.id) {
-          <li class="mini-cart__item">
-            <img [src]="item.product.image" [alt]="item.product.title" class="mini-cart__item-image" />
-            <div class="mini-cart__item-details">
-              <p class="mini-cart__item-title">{{ item.product.title }}</p>
-              <p class="mini-cart__item-price">{{ item.product.price | currency }}</p>
-              <div class="mini-cart__stepper">
-                <button type="button" (click)="decrement(item.product.id, item.quantity)" aria-label="Decrease quantity">−</button>
-                <span>{{ item.quantity }}</span>
-                <button type="button" (click)="increment(item.product.id, item.quantity)" aria-label="Increase quantity">+</button>
-              </div>
-            </div>
-            <button type="button" class="mini-cart__remove" (click)="remove(item.product.id)" aria-label="Remove item">&times;</button>
-          </li>
-        }
-      </ul>
-
-      <label class="mini-cart__gift-wrap">
-        <input type="checkbox" [checked]="giftWrap()" (change)="toggleGiftWrap()" />
-        For {{ giftWrapPrice | currency }} please wrap the product
-      </label>
-
-      <div class="mini-cart__subtotal">
-        <span>Subtotal</span>
-        <span>{{ total() | currency }}</span>
+  <ul class="mini-cart__items">
+    @for (item of items(); track item.product.id) {
+    <li class="mini-cart__item">
+      <img [src]="item.product.image" [alt]="item.product.title" class="mini-cart__item-image" />
+      <div class="mini-cart__item-details">
+        <p class="mini-cart__item-title">{{ item.product.title }}</p>
+        <p class="mini-cart__item-price">{{ item.product.price | currency }}</p>
+        <div class="mini-cart__stepper">
+          <button type="button" (click)="decrement(item.product.id, item.quantity)"
+            aria-label="Decrease quantity">−</button>
+          <span>{{ item.quantity }}</span>
+          <button type="button" (click)="increment(item.product.id, item.quantity)"
+            aria-label="Increase quantity">+</button>
+        </div>
       </div>
-
-      <a routerLink="/checkout" class="mini-cart__checkout" (click)="close()">Checkout</a>
-      <a routerLink="/cart" class="mini-cart__view-cart" (click)="close()">View Cart</a>
+      <button type="button" class="mini-cart__remove" (click)="remove(item.product.id)"
+        aria-label="Remove item">&times;</button>
+    </li>
     }
-  </aside>
+  </ul>
+
+  <label class="mini-cart__gift-wrap">
+    <input type="checkbox" [checked]="giftWrap()" (change)="toggleGiftWrap()" />
+    For {{ giftWrapPrice | currency }} please wrap the product
+  </label>
+
+  <div class="mini-cart__subtotal">
+    <span>Subtotal</span>
+    <span>{{ total() | currency }}</span>
+  </div>
+
+  <a routerLink="/checkout" class="mini-cart__checkout" (click)="close()">Checkout</a>
+  <a routerLink="/cart" class="mini-cart__view-cart" (click)="close()">View Cart</a>
+  }
+</aside>
 }

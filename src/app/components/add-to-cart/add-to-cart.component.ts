@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 
-import { Authservice } from '../../core/auth/authentication.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../core/cart/cart.service';
 import { ToastService } from '../../core/toast/toast.service';
 import { Product } from '../../models/product.model';
@@ -23,7 +23,7 @@ export class AddToCartComponent {
 
   @Output() addToCart = new EventEmitter<AddToCartEvent>();
 
-  private authService = inject(Authservice);
+  private authService = inject(AuthService);
   private cartService = inject(CartService);
   private toastService = inject(ToastService);
 

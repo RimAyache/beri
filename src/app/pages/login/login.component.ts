@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Authservice } from '../../core/auth/authentication.service';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,7 @@ import { Authservice } from '../../core/auth/authentication.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  private readonly authService = inject(Authservice);
+  private readonly authService = inject(AuthService);
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

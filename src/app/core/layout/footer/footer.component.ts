@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Authservice } from '../../../core/auth/authentication.service';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -10,7 +10,7 @@ import { Authservice } from '../../../core/auth/authentication.service';
   styleUrl: './footer.component.css',
 })
 export class FooterComponent {
-  private readonly authService = inject(Authservice);
+  private readonly authService = inject(AuthService);
 
   readonly isLoggedIn = this.authService.isLoggedIn;
 

@@ -5,14 +5,15 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { config } from '../../config';
-import { IUser } from './interface';
+import { IUser } from '../../models/user.model';
+import { RegisterRequest, RegisterResponse } from '../../models/auth.model';
 import { endpoint } from './index';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class Authservice {
+export class AuthService {
     http=inject(HttpClient);
     cookieservice=inject(CookieService);
     router=inject(Router);
@@ -58,8 +59,8 @@ getUser(): IUser | undefined {
     return this.decodeToken();
 }
 
-register(payload: any): Observable<any> {
-    return this.http.post(this.baseUrl+ '/auth/register', payload);
+register(payload: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.baseUrl}${endpoint.register}`, payload);
 }
 
 login(
