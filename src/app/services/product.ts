@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { config } from '../config';
 import { Product } from '../models/product.model';
@@ -13,6 +13,8 @@ export class ProductService {
   private readonly baseUrl = `${config.productsApiUrl}/products`;
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseUrl);
+    return this.http
+      .get<Omit<Product, 'available'>[]>(this.baseUrl)
+      .pipe(map((products) => products.map((product) => ({ ...product, available: true }))));
   }
 }

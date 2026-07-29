@@ -1,12 +1,12 @@
-import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductService } from '../../services/product';
 
 @Component({
   selector: 'app-products',
-  imports: [CurrencyPipe],
+  imports: [ProductCardComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
