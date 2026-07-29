@@ -10,6 +10,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
+      },
+      {
+        path: 'shop',
         loadComponent: () =>
           import('./pages/products/products.component').then((m) => m.ProductsComponent),
       },

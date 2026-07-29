@@ -1,0 +1,74 @@
+<section class="hero">
+  <div class="hero__banner hero__banner--sale">
+    <p class="hero__eyebrow">Ultimate Sale</p>
+    <h2 class="hero__title">New Collection</h2>
+    <a routerLink="/shop" class="hero__cta">Shop Now</a>
+  </div>
+  <div class="hero__banner hero__banner--accent">
+    <p class="hero__eyebrow">Ultimate Sale</p>
+    <h2 class="hero__title">New Collection</h2>
+    <a routerLink="/shop" class="hero__cta">Shop Now</a>
+  </div>
+  <div class="hero__banner hero__banner--dark">
+    <p class="hero__eyebrow">Ultimate Sale</p>
+    <h2 class="hero__title">New Collection</h2>
+    <a routerLink="/shop" class="hero__cta">Shop Now</a>
+  </div>
+</section>
+
+<section class="featured">
+  <h2 class="featured__heading">Featured Products</h2>
+
+  <div class="featured__pills">
+    @for (pill of categories; track pill.label) {
+      <button
+        type="button"
+        class="pill"
+        [class.pill--active]="pill.label === selectedCategory().label"
+        (click)="selectCategory(pill)"
+      >
+        {{ pill.label }}
+      </button>
+    }
+  </div>
+
+  <ul class="featured__grid">
+    @for (product of featuredProducts().slice(0, featuredCount); track product.id) {
+      <li>
+        <app-product-card [product]="product" />
+      </li>
+    } @empty {
+      <p>Loading products...</p>
+    }
+  </ul>
+
+  <a routerLink="/shop" class="featured__view-more">View More</a>
+</section>
+
+<section class="instagram">
+  <h2 class="instagram__heading">Follow Us On Instagram</h2>
+  <div class="instagram__strip">
+    @for (tile of [1, 2, 3, 4, 5]; track tile) {
+      <div class="instagram__tile"></div>
+    }
+  </div>
+</section>
+
+<section class="trust-badges">
+  <div class="trust-badge">
+    <span class="trust-badge__title">High Quality</span>
+    <span class="trust-badge__desc">Crafted from top materials</span>
+  </div>
+  <div class="trust-badge">
+    <span class="trust-badge__title">Warranty Protection</span>
+    <span class="trust-badge__desc">Over 2 years</span>
+  </div>
+  <div class="trust-badge">
+    <span class="trust-badge__title">Free Shipping</span>
+    <span class="trust-badge__desc">Order over $75</span>
+  </div>
+  <div class="trust-badge">
+    <span class="trust-badge__title">24/7 Support</span>
+    <span class="trust-badge__desc">Dedicated support</span>
+  </div>
+</section>

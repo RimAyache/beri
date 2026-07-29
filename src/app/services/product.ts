@@ -17,4 +17,10 @@ export class ProductService {
       .get<Omit<Product, 'available'>[]>(this.baseUrl)
       .pipe(map((products) => products.map((product) => ({ ...product, available: true }))));
   }
+
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.http
+      .get<Omit<Product, 'available'>[]>(`${this.baseUrl}/category/${category}`)
+      .pipe(map((products) => products.map((product) => ({ ...product, available: true }))));
+  }
 }
