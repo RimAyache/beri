@@ -76,6 +76,12 @@ login(
         );
     }
 
+refreshToken(): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(`${this.baseUrl}${endpoint.refresh}`, {}).pipe(
+        tap((response) => this.setToken(response.token))
+    );
+}
+
 logout(): Observable<any> {
     return this.http.post(`${this.baseUrl}${endpoint.logout}`, {}).pipe(
         catchError(() => of(null)),
