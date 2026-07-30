@@ -69,6 +69,10 @@ export class CartService {
     });
   }
 
+  clearCart(): void {
+    this.cartItems.set(new Map());
+  }
+
   private setLocalQuantity(product: Product, quantity: number): void {
     this.cartItems.update((map) => new Map(map).set(product.id, { product, quantity }));
   }
