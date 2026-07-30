@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import type { ICellRendererAngularComp as ICellRenderer } from 'ag-grid-angular';
 import type { ICellRendererParams } from 'ag-grid-community';
 
-type ChipVariant = 'available' | 'out-of-stock' | 'neutral';
+import { ProductChipVariant } from '../../../../models/admin.model';
 
 @Component({
   selector: 'app-statuschiprenderer',
@@ -11,7 +11,7 @@ type ChipVariant = 'available' | 'out-of-stock' | 'neutral';
 })
 export class StatusChipRenderer implements ICellRenderer {
   label = '';
-  variant: ChipVariant = 'neutral';
+  variant: ProductChipVariant = 'neutral';
 
   agInit(params: ICellRendererParams): void {
     this.setState(params);

@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import type { ICellRendererAngularComp as ICellRenderer } from 'ag-grid-angular';
-import type { ICellRendererParams } from 'ag-grid-community';
 
-interface DeleteButtonParams extends ICellRendererParams {
-  onDelete: (id: number) => void;
-}
+import { DeleteButtonParams } from '../../../../models/admin.model';
 
 @Component({
   selector: 'app-delete-button-renderer',

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import type { ICellRendererAngularComp as ICellRenderer } from 'ag-grid-angular';
 import type { ICellRendererParams } from 'ag-grid-community';
 
-type ChipVariant = 'completed' | 'pending' | 'cancelled' | 'neutral';
+import { OrderChipVariant } from '../../../../models/admin.model';
 
 @Component({
   selector: 'app-order-status-chip-renderer',
@@ -11,7 +11,7 @@ type ChipVariant = 'completed' | 'pending' | 'cancelled' | 'neutral';
 })
 export class OrderStatusChipRenderer implements ICellRenderer {
   label = '';
-  variant: ChipVariant = 'neutral';
+  variant: OrderChipVariant = 'neutral';
 
   agInit(params: ICellRendererParams): void {
     this.setState(params);

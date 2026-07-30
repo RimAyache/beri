@@ -3,12 +3,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
-import { PriceBucket, config } from '../../config';
+import { config } from '../../config';
+import { PriceBucket, SortChoice, SortOption } from '../../models/shop.model';
 import { ProductService } from '../../services/product';
 
-type SortOption = 'default' | 'price-asc' | 'price-desc' | 'rating';
-
-const SORT_OPTIONS: { label: string; value: SortOption }[] = [
+const SORT_OPTIONS: SortChoice[] = [
   { label: 'Featured', value: 'default' },
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },

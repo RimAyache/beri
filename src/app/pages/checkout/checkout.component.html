@@ -82,7 +82,8 @@
         <section class="checkout__section" formGroupName="payment">
           <h2>Payment</h2>
           <div class="field">
-            <select formControlName="cardType" class="select-field">
+            <label for="cardType" class="field__label">Payment method</label>
+            <select id="cardType" formControlName="cardType" class="select-field">
               <option value="Visa">Visa</option>
               <option value="Mastercard">Mastercard</option>
               <option value="American Express">American Express</option>
@@ -124,12 +125,22 @@
       <aside class="checkout__summary">
         <h2>Order Summary</h2>
         <ul class="summary-items">
-          @for (item of items(); track item.product.id) {
+          @for (item of items(); track item.id) {
             <li class="summary-item">
               <img [src]="item.product.image" [alt]="item.product.title" class="summary-item__image" />
               <div class="summary-item__details">
                 <p class="summary-item__title">{{ item.product.title }}</p>
                 <p class="summary-item__category">{{ item.product.category }}</p>
+                @if (item.size || item.color) {
+                  <p class="summary-item__variant">
+                    @if (item.size) {
+                      <span>Size: {{ item.size }}</span>
+                    }
+                    @if (item.color) {
+                      <span>Color: {{ item.color }}</span>
+                    }
+                  </p>
+                }
                 <p class="summary-item__qty">Qty {{ item.quantity }}</p>
               </div>
               <p class="summary-item__price">{{ item.product.price * item.quantity | currency }}</p>

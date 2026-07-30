@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -18,33 +18,23 @@ export class MiniCartComponent {
   readonly items = this.cartService.items;
   readonly subtotal = this.cartService.subtotal;
 
-  readonly giftWrap = signal(false);
-  readonly giftWrapPrice = config.cart.giftWrapPrice;
-
   readonly amountToFreeShipping = computed(() =>
     Math.max(0, config.cart.freeShippingThreshold - this.subtotal()),
-  );
-  readonly total = computed(
-    () => this.subtotal() + (this.giftWrap() ? config.cart.giftWrapPrice : 0),
   );
 
   close(): void {
     this.cartService.closeMiniCart();
   }
 
-  toggleGiftWrap(): void {
-    this.giftWrap.update((wrapped) => !wrapped);
+  increment(itemId: string, quantity: number): void {
+    this.cartService.updateQuantity(itemId, quantity + 1);
   }
 
-  increment(productId: number, quantity: number): void {
-    this.cartService.updateQuantity(productId, quantity + 1);
+  decrement(itemId: string, quantity: number): void {
+    this.cartService.updateQuantity(itemId, quantity - 1);
   }
 
-  decrement(productId: number, quantity: number): void {
-    this.cartService.updateQuantity(productId, quantity - 1);
-  }
-
-  remove(productId: number): void {
-    this.cartService.removeItem(productId);
+  remove(itemId: string): void {
+    this.cartService.removeItem(itemId);
   }
 }

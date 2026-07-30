@@ -1,9 +1,4 @@
-
-export interface PriceBucket {
-  label: string;
-  min: number;
-  max: number | null;
-}
+import { PriceBucket } from './models/shop.model';
 
 export const config = {
   apiUrl: 'http://localhost:4000/api',
@@ -20,14 +15,13 @@ export const config = {
 
   cart: {
     maxQuantityPerItem: 10,
-    giftWrapPrice: 10,
     freeShippingThreshold: 75,
     shippingFee: 10,
+    storageKey: 'beri.cart',
   },
 
   home: {
     featuredProductCount: 6,
-    galleryTileCount: 5,
   },
 
   shop: {
@@ -44,7 +38,14 @@ export const config = {
     relatedProductsLimit: 4,
     discountPercent: 20,
     stockBarReference: 50,
-    demoCountdown: '05:23:47',
+    saleCountdownSeconds: 5 * 60 * 60 + 23 * 60 + 47,
+  },
+
+  time: {
+    tickIntervalMs: 1000,
+    secondsPerMinute: 60,
+    minutesPerHour: 60,
+    clockDigits: 2,
   },
 
   rating: {
@@ -82,5 +83,19 @@ export const config = {
   locale: {
     id: 'en-US',
     currency: 'USD',
+  },
+
+  owner: {
+    name: 'Rim Ayache',
+    role: 'Computer Engineering Student & Developer',
+    location: 'Beirut, Lebanon',
+    email: 'rim.ayache@lau.edu',
+  },
+
+  support: {
+    email: 'support@beri.com',
+    phone: '+1 (800) 555-0142',
+    hours: 'Monday to Friday, 9:00 – 18:00 (GMT)',
+    responseTime: 'within one business day',
   },
 };

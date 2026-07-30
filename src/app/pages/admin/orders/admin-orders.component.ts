@@ -6,15 +6,8 @@ import type { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { OrderStatusChipRenderer } from './cell-renderers/order-status-chip-renderer.component';
 import { config } from '../../../config';
 import { OrderService } from '../../../services/order';
+import { OrderRow } from '../../../models/admin.model';
 import { Order } from '../../../models/order.model';
-
-interface OrderRow {
-  Id: string;
-  Customer: string;
-  Date: string;
-  Total: number;
-  Status: 'Pending' | 'Completed' | 'Cancelled';
-}
 
 const currencyFormatter = new Intl.NumberFormat(config.locale.id, {
   style: 'currency',

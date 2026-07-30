@@ -68,8 +68,7 @@
   margin-bottom: 1.25rem;
 }
 
-.field input,
-.select-field {
+.field input {
   width: 100%;
   border: none;
   border-bottom: 1px solid var(--color-border);
@@ -84,6 +83,47 @@
 
 .field input::placeholder {
   color: var(--color-muted);
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+
+.select-field {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.8rem 2.75rem 0.8rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237b1e3b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.select-field:hover {
+  border-color: var(--color-accent-light);
+}
+
+.select-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(123, 30, 59, 0.12);
 }
 
 .error-text {
@@ -163,6 +203,14 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-muted);
+}
+
+.summary-item__variant {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0 0 0.15rem;
+  font-size: 0.75rem;
+  color: var(--color-text);
 }
 
 .summary-item__qty {

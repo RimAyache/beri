@@ -154,15 +154,15 @@
   margin-bottom: 1rem;
 }
 
-.btn-secondary {
-  width: 100%;
-  padding: 1rem;
-  background: #fff;
-  color: #7b1e3b;
-  border: 1px solid #c7295d;
-  border-radius: 8px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
+.switch-link {
+  text-align: center;
+  color: #333;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.switch-link a {
+  color: #c7295d;
+  font-weight: 700;
+  text-decoration: none;
 }

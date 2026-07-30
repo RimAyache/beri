@@ -41,6 +41,14 @@
   color: var(--color-text);
 }
 
+.footer__link {
+  text-decoration: none;
+}
+
+.footer__link:hover {
+  color: var(--color-accent);
+}
+
 .footer__signout {
   border: none;
   background: none;

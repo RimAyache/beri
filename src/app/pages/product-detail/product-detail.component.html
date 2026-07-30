@@ -32,7 +32,7 @@
           <span class="info__discount-badge">SAVE {{ discountPercent }}%</span>
         </div>
 
-        <p class="info__countdown">Hurry up! Sale ends in <strong>{{ countdown }}</strong></p>
+        <p class="info__countdown">Hurry up! Sale ends in <strong>{{ countdown() }}</strong></p>
 
         @if (product.quantity !== undefined) {
           <div class="stock">
@@ -83,19 +83,14 @@
           [product]="product"
           [disabled]="!product.available"
           [showAddButton]="true"
+          [size]="selectedSize()"
+          [color]="selectedColor()"
           class="info__add-to-cart"
         />
 
         <div class="info__note">
           <p>Estimated delivery: 3–5 business days.</p>
           <p>Free shipping &amp; free 30-day returns.</p>
-        </div>
-
-        <div class="payment-strip" aria-label="Accepted payment methods">
-          <span class="payment-strip__item">Visa</span>
-          <span class="payment-strip__item">Mastercard</span>
-          <span class="payment-strip__item">PayPal</span>
-          <span class="payment-strip__item">Apple Pay</span>
         </div>
       </div>
     </div>

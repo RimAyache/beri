@@ -1,11 +1,19 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, computed, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  input,
+  linkedSignal,
+} from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { map, of, switchMap } from 'rxjs';
 
 import { AddToCartComponent } from '../../components/add-to-cart/add-to-cart.component';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { config } from '../../config';
+import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product';
 
 @Component({
@@ -40,8 +48,42 @@ export class ProductDetailComponent {
     { initialValue: [] },
   );
 
-  protected readonly selectedSize = signal<string | null>(null);
-  protected readonly selectedColor = signal<string | null>(null);
+  protected readonly selectedSize = linkedSignal<Product | null, string | null>({
+    source: this.product,
+    computation: (product) => product?.sizes?.[0] ?? null,
+  });
+
+  protected readonly selectedColor = linkedSignal<Product | null, string | null>({
+    source: this.product,
+    computation: (product) => product?.colors?.[0] ?? null,
+  });
+
+  private readonly remainingSeconds = linkedSignal<number, number>({
+    source: this.productId,
+    computation: () => config.productDetail.saleCountdownSeconds,
+  });
+
+  protected readonly countdown = computed(() => {
+    const secondsPerHour = config.time.secondsPerMinute * config.time.minutesPerHour;
+    const remaining = this.remainingSeconds();
+
+    return [
+      Math.floor(remaining / secondsPerHour),
+      Math.floor((remaining % secondsPerHour) / config.time.secondsPerMinute),
+      remaining % config.time.secondsPerMinute,
+    ]
+      .map((part) => String(part).padStart(config.time.clockDigits, '0'))
+      .join(':');
+  });
+
+  constructor() {
+    const ticker = setInterval(
+      () => this.remainingSeconds.update((remaining) => Math.max(0, remaining - 1)),
+      config.time.tickIntervalMs,
+    );
+
+    inject(DestroyRef).onDestroy(() => clearInterval(ticker));
+  }
 
   protected readonly originalPrice = computed(() => {
     const product = this.product();
@@ -59,7 +101,6 @@ export class ProductDetailComponent {
   });
 
   protected readonly discountPercent = config.productDetail.discountPercent;
-  protected readonly countdown = config.productDetail.demoCountdown;
 
   readonly stars = Array.from({ length: config.rating.starCount }, (_, i) => i);
 

@@ -19,34 +19,39 @@
   }
 
   <ul class="mini-cart__items">
-    @for (item of items(); track item.product.id) {
+    @for (item of items(); track item.id) {
     <li class="mini-cart__item">
       <img [src]="item.product.image" [alt]="item.product.title" class="mini-cart__item-image" />
       <div class="mini-cart__item-details">
         <p class="mini-cart__item-title">{{ item.product.title }}</p>
+        @if (item.size || item.color) {
+        <p class="mini-cart__item-variant">
+          @if (item.size) {
+          <span>Size: {{ item.size }}</span>
+          }
+          @if (item.color) {
+          <span>Color: {{ item.color }}</span>
+          }
+        </p>
+        }
         <p class="mini-cart__item-price">{{ item.product.price | currency }}</p>
         <div class="mini-cart__stepper">
-          <button type="button" (click)="decrement(item.product.id, item.quantity)"
+          <button type="button" (click)="decrement(item.id, item.quantity)"
             aria-label="Decrease quantity">−</button>
           <span>{{ item.quantity }}</span>
-          <button type="button" (click)="increment(item.product.id, item.quantity)"
+          <button type="button" (click)="increment(item.id, item.quantity)"
             aria-label="Increase quantity">+</button>
         </div>
       </div>
-      <button type="button" class="mini-cart__remove" (click)="remove(item.product.id)"
+      <button type="button" class="mini-cart__remove" (click)="remove(item.id)"
         aria-label="Remove item">&times;</button>
     </li>
     }
   </ul>
 
-  <label class="mini-cart__gift-wrap">
-    <input type="checkbox" [checked]="giftWrap()" (change)="toggleGiftWrap()" />
-    For {{ giftWrapPrice | currency }} please wrap the product
-  </label>
-
   <div class="mini-cart__subtotal">
     <span>Subtotal</span>
-    <span>{{ total() | currency }}</span>
+    <span>{{ subtotal() | currency }}</span>
   </div>
 
   <a routerLink="/checkout" class="mini-cart__checkout" (click)="close()">Checkout</a>

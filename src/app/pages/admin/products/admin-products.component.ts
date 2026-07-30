@@ -7,15 +7,8 @@ import { StatusChipRenderer } from './cell-renderers/statuschiprenderer.componen
 import { DeleteButtonRenderer } from './cell-renderers/delete-button-renderer.component';
 import { config } from '../../../config';
 import { ProductService } from '../../../services/product';
+import { ProductRow } from '../../../models/admin.model';
 import { Product } from '../../../models/product.model';
-
-interface ProductRow {
-  Id: number;
-  Name: string;
-  Description: string;
-  Price: number;
-  Status: 'Available' | 'Out of Stock';
-}
 
 const currencyFormatter = new Intl.NumberFormat(config.locale.id, {
   style: 'currency',

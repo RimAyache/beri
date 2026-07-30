@@ -3,6 +3,8 @@ export interface ProductRating {
   count: number;
 }
 
+export type ProductExtras = Pick<Product, 'quantity' | 'colors' | 'sizes'>;
+
 export interface Product {
   id: number;
   title: string;

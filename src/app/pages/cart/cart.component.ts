@@ -1,8 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { config } from '../../config';
 import { CartService } from '../../core/cart/cart.service';
 
 @Component({
@@ -17,31 +16,19 @@ export class CartComponent {
   protected readonly items = this.cartService.items;
   protected readonly subtotal = this.cartService.subtotal;
 
-  /* Gift wrap is display-only, same as the mini-cart's — nothing persists it. */
-  protected readonly giftWrap = signal(false);
-  protected readonly giftWrapPrice = config.cart.giftWrapPrice;
-
-  protected readonly total = computed(
-    () => this.subtotal() + (this.giftWrap() ? config.cart.giftWrapPrice : 0),
-  );
-
   protected lineTotal(price: number, quantity: number): number {
     return price * quantity;
   }
 
-  protected toggleGiftWrap(): void {
-    this.giftWrap.update((wrapped) => !wrapped);
+  protected increment(itemId: string, quantity: number): void {
+    this.cartService.updateQuantity(itemId, quantity + 1);
   }
 
-  protected increment(productId: number, quantity: number): void {
-    this.cartService.updateQuantity(productId, quantity + 1);
+  protected decrement(itemId: string, quantity: number): void {
+    this.cartService.updateQuantity(itemId, quantity - 1);
   }
 
-  protected decrement(productId: number, quantity: number): void {
-    this.cartService.updateQuantity(productId, quantity - 1);
-  }
-
-  protected remove(productId: number): void {
-    this.cartService.removeItem(productId);
+  protected remove(itemId: string): void {
+    this.cartService.removeItem(itemId);
   }
 }

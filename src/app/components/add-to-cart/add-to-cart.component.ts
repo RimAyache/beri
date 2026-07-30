@@ -1,15 +1,11 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, output } from '@angular/core';
 
 import { config } from '../../config';
 import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../core/cart/cart.service';
 import { ToastService } from '../../core/toast/toast.service';
+import { AddToCartEvent, CartVariant } from '../../models/cart.model';
 import { Product } from '../../models/product.model';
-
-export interface AddToCartEvent {
-  product: Product;
-  quantity: number;
-}
 
 @Component({
   selector: 'app-add-to-cart',
@@ -22,6 +18,14 @@ export class AddToCartComponent {
 
   showAddButton = input(false);
 
+  size = input<string | null>(null);
+  color = input<string | null>(null);
+
+  private readonly variant = computed<CartVariant>(() => ({
+    size: this.size() ?? this.product().sizes?.[0] ?? null,
+    color: this.color() ?? this.product().colors?.[0] ?? null,
+  }));
+
   addToCart = output<AddToCartEvent>();
 
   private authService = inject(AuthService);
@@ -29,10 +33,16 @@ export class AddToCartComponent {
   private toastService = inject(ToastService);
 
   readonly isLoggedIn = this.authService.isLoggedIn;
-
-  quantity = signal(0);
-  private maxReached = signal(false);
-  private unavailable = signal(false);
+  
+  quantity = linkedSignal<Product, number>({ source: this.product, computation: () => 0 });
+  private maxReached = linkedSignal<Product, boolean>({
+    source: this.product,
+    computation: () => false,
+  });
+  private unavailable = linkedSignal<Product, boolean>({
+    source: this.product,
+    computation: () => false,
+  });
 
   isIncrementDisabled(): boolean {
     return this.disabled() || this.unavailable() || this.maxReached();
@@ -79,14 +89,13 @@ export class AddToCartComponent {
     this.maxReached.set(false);
   }
 
-  /** Commits the picked quantity to the cart, then resets the stepper to 0. */
   addSelectedToCart(): void {
     if (this.isAddDisabled()) {
       return;
     }
 
     const selected = this.quantity();
-    const alreadyInCart = this.cartService.getQuantity(this.product().id);
+    const alreadyInCart = this.cartService.getQuantity(this.product().id, this.variant());
     const total = Math.min(alreadyInCart + selected, config.cart.maxQuantityPerItem);
 
     this.pushToCart(total);
@@ -98,7 +107,7 @@ export class AddToCartComponent {
 
   private pushToCart(quantity: number): void {
     this.cartService
-      .addItem(this.product(), quantity)
+      .addItem(this.product(), quantity, this.variant())
       .subscribe(() => this.cartService.openMiniCart());
   }
 }

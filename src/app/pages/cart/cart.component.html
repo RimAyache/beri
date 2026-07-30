@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of items(); track item.product.id) {
+        @for (item of items(); track item.id) {
           <tr>
             <td class="cart-table__product">
               <div class="line-item">
@@ -27,10 +27,20 @@
                     {{ item.product.title }}
                   </a>
                   <p class="line-item__category">{{ item.product.category }}</p>
+                  @if (item.size || item.color) {
+                    <p class="line-item__variant">
+                      @if (item.size) {
+                        <span>Size: {{ item.size }}</span>
+                      }
+                      @if (item.color) {
+                        <span>Color: {{ item.color }}</span>
+                      }
+                    </p>
+                  }
                   <button
                     type="button"
                     class="line-item__remove"
-                    (click)="remove(item.product.id)"
+                    (click)="remove(item.id)"
                     aria-label="Remove item from cart"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="line-item__remove-icon" aria-hidden="true">
@@ -50,7 +60,7 @@
               <div class="stepper">
                 <button
                   type="button"
-                  (click)="decrement(item.product.id, item.quantity)"
+                  (click)="decrement(item.id, item.quantity)"
                   aria-label="Decrease quantity"
                 >
                   −
@@ -58,7 +68,7 @@
                 <span>{{ item.quantity }}</span>
                 <button
                   type="button"
-                  (click)="increment(item.product.id, item.quantity)"
+                  (click)="increment(item.id, item.quantity)"
                   aria-label="Increase quantity"
                 >
                   +
@@ -74,25 +84,14 @@
     </table>
 
     <div class="cart__summary">
-      <label class="gift-wrap">
-        <input type="checkbox" [checked]="giftWrap()" (change)="toggleGiftWrap()" />
-        For {{ giftWrapPrice | currency }} please wrap the product
-      </label>
-
       <div class="totals">
         <div class="totals__row">
           <span>Subtotal</span>
           <span>{{ subtotal() | currency }}</span>
         </div>
-        @if (giftWrap()) {
-          <div class="totals__row totals__row--muted">
-            <span>Gift wrap</span>
-            <span>{{ giftWrapPrice | currency }}</span>
-          </div>
-        }
         <div class="totals__row totals__row--grand">
           <span>Total</span>
-          <span>{{ total() | currency }}</span>
+          <span>{{ subtotal() | currency }}</span>
         </div>
 
         <a routerLink="/checkout" class="totals__checkout">Checkout</a>

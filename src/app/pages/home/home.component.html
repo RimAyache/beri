@@ -40,17 +40,6 @@
   <a routerLink="/shop" class="featured__view-more">View More</a>
 </section>
 
-<section class="instagram">
-  <h2 class="instagram__heading">Follow Us On Instagram</h2>
-  <div class="instagram__strip">
-    @for (tile of galleryImages(); track tile.id) {
-      <a [routerLink]="['/products', tile.id]" class="instagram__tile">
-        <img [src]="tile.image" [alt]="tile.title" class="instagram__image" />
-      </a>
-    }
-  </div>
-</section>
-
 <section class="trust-badges">
   <div class="trust-badge">
     <span class="trust-badge__title">High Quality</span>

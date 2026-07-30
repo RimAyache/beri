@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { DashboardStat, Order } from '../models/order.model';
+import { CustomerOrder, DashboardStat, Order } from '../models/order.model';
 
 const MOCK_STATS: DashboardStat[] = [
   { label: 'Revenue', value: '$7,825', trend: 22, sparkline: [4, 6, 5, 8, 7, 9, 11] },
@@ -20,6 +20,15 @@ const MOCK_ORDERS: Order[] = [
   { id: '#ORD-1036', customerName: 'Mia Torres', date: '2026-07-26', total: 89.99, status: 'Completed' },
 ];
 
+const MOCK_CUSTOMER_ORDERS: CustomerOrder[] = [
+  { id: '#ORD-2318', date: '2026-07-30', itemCount: 2, total: 164.98, status: 'Pending' },
+  { id: '#ORD-2306', date: '2026-07-24', itemCount: 1, total: 59.99, status: 'Pending' },
+  { id: '#ORD-2291', date: '2026-07-11', itemCount: 4, total: 312.45, status: 'Completed' },
+  { id: '#ORD-2274', date: '2026-06-28', itemCount: 1, total: 109.95, status: 'Completed' },
+  { id: '#ORD-2260', date: '2026-06-15', itemCount: 3, total: 78.5, status: 'Cancelled' },
+  { id: '#ORD-2233', date: '2026-05-30', itemCount: 2, total: 145.0, status: 'Completed' },
+];
+
 @Injectable({
   providedIn: 'root',
 })
@@ -34,5 +43,13 @@ export class OrderService {
 
   getOrders(): Observable<Order[]> {
     return of(MOCK_ORDERS);
+  }
+
+  getMyPendingOrders(): Observable<CustomerOrder[]> {
+    return of(MOCK_CUSTOMER_ORDERS.filter((order) => order.status === 'Pending'));
+  }
+
+  getMyRecentOrders(): Observable<CustomerOrder[]> {
+    return of(MOCK_CUSTOMER_ORDERS.filter((order) => order.status !== 'Pending'));
   }
 }

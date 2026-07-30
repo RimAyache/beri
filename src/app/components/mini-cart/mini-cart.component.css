@@ -103,6 +103,14 @@
   white-space: nowrap;
 }
 
+.mini-cart__item-variant {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
 .mini-cart__item-price {
   margin: 0 0 0.5rem;
   font-weight: 600;
@@ -133,20 +141,12 @@
   flex-shrink: 0;
 }
 
-.mini-cart__gift-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  margin: 1rem 0;
-}
-
 .mini-cart__subtotal {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
   font-size: 1.1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .mini-cart__checkout {

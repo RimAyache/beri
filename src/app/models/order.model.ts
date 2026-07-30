@@ -8,6 +8,14 @@ export interface Order {
   status: OrderStatus;
 }
 
+export interface CustomerOrder {
+  id: string;
+  date: string;
+  itemCount: number;
+  total: number;
+  status: OrderStatus;
+}
+
 export interface DashboardStat {
   label: string;
   value: string;

@@ -171,20 +171,6 @@
   margin: 0.25rem 0;
 }
 
-.payment-strip {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.payment-strip__item {
-  font-size: 0.75rem;
-  color: var(--color-muted);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  padding: 0.25rem 0.5rem;
-}
-
 .related {
   margin-top: 4rem;
 }

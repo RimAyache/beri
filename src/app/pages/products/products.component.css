@@ -77,7 +77,6 @@
   display: flex;
 }
 
-/* Without this the card only takes its content width inside the flex item. */
 .product-list li app-product-card {
   flex: 1;
   min-width: 0;
