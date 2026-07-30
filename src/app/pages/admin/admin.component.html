@@ -1,9 +1,12 @@
-<!-- The AG Grid component -->
-<div style="width: 600px; height: 500px;">
+<div class="admin-grid">
   <ag-grid-angular
-      style="width: 100%; height: 100%;"
-      [rowData]="rowData"
-      [columnDefs]="colDefs"
-      [pagination]="true" />
-      
+    class="admin-grid__grid"
+    [theme]="theme"
+    [rowData]="rowData()"
+    [columnDefs]="colDefs"
+    [defaultColDef]="defaultColDef"
+    [pagination]="pagination"
+    [paginationPageSize]="paginationPageSize"
+    (cellValueChanged)="onCellValueChanged($event)"
+  />
 </div>

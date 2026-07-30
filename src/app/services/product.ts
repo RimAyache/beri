@@ -20,9 +20,15 @@ export class ProductService {
   private readonly baseUrl = `${config.productsApiUrl}/products`;
 
   getProducts(): Observable<Product[]> {
-    return this.http
-      .get<Omit<Product, 'available'>[]>(this.baseUrl)
-      .pipe(map((products) => products.map((product) => ({ ...product, available: true }))));
+    return this.http.get<Omit<Product, 'available'>[]>(this.baseUrl).pipe(
+      map((products) =>
+        products.map((product) => ({
+          ...product,
+          available: true,
+          ...PRODUCT_EXTRAS[product.id],
+        })),
+      ),
+    );
   }
 
   getProduct(id: number): Observable<Product> {
@@ -43,5 +49,13 @@ export class ProductService {
 
   getCategories(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/categories`);
+  }
+
+  updateProduct(id: number, changes: Partial<Product>): Observable<Product> {
+    return this.http.put<Product>(`${this.baseUrl}/${id}`, changes);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

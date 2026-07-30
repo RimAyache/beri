@@ -1,9 +1,22 @@
-import { Component } from '@angular/core';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { AllCommunityModule, ModuleRegistry, themeQuartz } from 'ag-grid-community';
 ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridAngular } from 'ag-grid-angular';
-import type { ColDef } from 'ag-grid-community';
+import type { CellValueChangedEvent, ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { StatusChipRenderer } from './cell-renderers/statuschiprenderer.component';
+import { DeleteButtonRenderer } from './cell-renderers/delete-button-renderer.component';
+import { ProductService } from '../../services/product';
+import { Product } from '../../models/product.model';
+
+interface ProductRow {
+  Id: number;
+  Name: string;
+  Description: string;
+  Price: number;
+  Status: 'Available' | 'Out of Stock';
+}
+
+const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 @Component({
   selector: 'app-admin',
@@ -11,22 +24,73 @@ import { StatusChipRenderer } from './cell-renderers/statuschiprenderer.componen
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
-export class AdminComponent {
-colDefs: ColDef[] = [
-        { field: "ID" },
-        { field: "Name" },
-        { field: "Description" },
-        { field: "Price" },
-        { field: "Status", filter: true, cellRenderer: StatusChipRenderer }
+export class AdminComponent implements OnInit {
+  private readonly productService = inject(ProductService);
 
-    ];
-    rowData = [
-        {ID: 1, Name: "Product 1", Description: "Description 1", Price: 10.99, Status: "Available"},
-        {ID: 2, Name: "Product 2", Description: "Description 2", Price: 19.99, Status: "Out of Stock"},
-        {ID: 3, Name: "Product 3", Description: "Description 3", Price: 5.99, Status: "Available"},
-        {ID: 4, Name: "Product 4", Description: "Description 4", Price: 15.49, Status: "Discontinued"},
-        {ID: 5, Name: "Product 5", Description: "Description 5", Price: 8.99, Status: "Available"}
-    ];
-   
-    
+  theme = themeQuartz.withParams({
+    accentColor: '#7b1e3b',
+    fontFamily: 'Poppins, sans-serif',
+    headerFontFamily: 'Volkhov, serif',
+    headerBackgroundColor: '#2e1118',
+    headerTextColor: '#ffffff',
+    borderRadius: 8,
+    wrapperBorderRadius: 8,
+  });
+
+  defaultColDef: ColDef<ProductRow> = {
+    sortable: true,
+    filter: true,
+  };
+
+  colDefs: ColDef<ProductRow>[] = [
+    { field: 'Id', maxWidth: 90 },
+    { field: 'Name', flex: 1 },
+    { field: 'Description', flex: 2, editable: true },
+    {
+      field: 'Price',
+      valueFormatter: (params: ValueFormatterParams<ProductRow, number>) =>
+        params.value != null ? currencyFormatter.format(params.value) : '',
+    },
+    { field: 'Status', filter: true, cellRenderer: StatusChipRenderer },
+    {
+      headerName: '',
+      maxWidth: 100,
+      sortable: false,
+      filter: false,
+      cellRenderer: DeleteButtonRenderer,
+      cellRendererParams: { onDelete: (id: number) => this.deleteRow(id) },
+    },
+  ];
+
+  pagination = true;
+  paginationPageSize = 10;
+
+  rowData = signal<ProductRow[]>([]);
+
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe((products) => {
+      this.rowData.set(products.map(toRow));
+    });
+  }
+
+  onCellValueChanged(event: CellValueChangedEvent<ProductRow>): void {
+    if (event.colDef.field !== 'Description') return;
+    this.productService.updateProduct(event.data.Id, { description: event.data.Description }).subscribe();
+  }
+
+  private deleteRow(id: number): void {
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.rowData.update((rows) => rows.filter((row) => row.Id !== id));
+    });
+  }
+}
+
+function toRow(product: Product): ProductRow {
+  return {
+    Id: product.id,
+    Name: product.title,
+    Description: product.description,
+    Price: product.price,
+    Status: (product.quantity ?? 0) > 0 ? 'Available' : 'Out of Stock',
+  };
 }
