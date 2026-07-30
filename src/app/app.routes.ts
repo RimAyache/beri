@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 
 import { StorefrontLayoutComponent } from './core/layout/storefront-layout.component';
 import { AdminLayoutComponent } from './core/layout/admin-layout.component';
+import { authGuard } from './core/auth/auth.guard';
+import { guestGuard } from './core/auth/guest.guard';
 
 export const routes: Routes = [
   {
@@ -26,14 +28,17 @@ export const routes: Routes = [
       },
       {
         path: 'cart',
+        canActivate: [authGuard],
         loadComponent: () => import('./pages/cart/cart.component').then((m) => m.CartComponent),
       },
       {
         path: 'login',
+        canActivate: [guestGuard],
         loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
       },
       {
         path: 'register',
+        canActivate: [guestGuard],
         loadComponent: () =>
           import('./pages/signup/signup.component').then((m) => m.SignupComponent),
       },
