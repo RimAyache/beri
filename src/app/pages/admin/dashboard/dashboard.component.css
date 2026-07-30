@@ -1,0 +1,76 @@
+:host {
+  display: block;
+}
+
+.dashboard__title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard__card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--color-bg);
+}
+
+.dashboard__card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-chip--pending {
+  background: #fdf1d6;
+  color: #92650a;
+}
+
+.status-chip--completed {
+  background: #dcf3e3;
+  color: #1a7a3c;
+}
+
+.status-chip--cancelled {
+  background: #fbdedc;
+  color: #b3261e;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  font-weight: 600;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.orders-table td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.orders-table tr:last-child td {
+  border-bottom: none;
+}

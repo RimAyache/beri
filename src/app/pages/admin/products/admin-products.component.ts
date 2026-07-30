@@ -5,8 +5,8 @@ import { AgGridAngular } from 'ag-grid-angular';
 import type { CellValueChangedEvent, ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { StatusChipRenderer } from './cell-renderers/statuschiprenderer.component';
 import { DeleteButtonRenderer } from './cell-renderers/delete-button-renderer.component';
-import { ProductService } from '../../services/product';
-import { Product } from '../../models/product.model';
+import { ProductService } from '../../../services/product';
+import { Product } from '../../../models/product.model';
 
 interface ProductRow {
   Id: number;
@@ -19,12 +19,12 @@ interface ProductRow {
 const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 @Component({
-  selector: 'app-admin',
+  selector: 'app-admin-products',
   imports: [AgGridAngular],
-  templateUrl: './admin.component.html',
-  styleUrl: './admin.component.css',
+  templateUrl: './admin-products.component.html',
+  styleUrl: './admin-products.component.css',
 })
-export class AdminComponent implements OnInit {
+export class AdminProductsComponent implements OnInit {
   private readonly productService = inject(ProductService);
 
   theme = themeQuartz.withParams({
