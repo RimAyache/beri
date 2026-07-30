@@ -12,4 +12,7 @@ export interface Product {
   image: string;
   rating: ProductRating;
   available: boolean;
+  quantity?: number;
+  sizes?: string[];
+  colors?: string[];
 }
