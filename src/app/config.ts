@@ -1,4 +1,4 @@
 export const config = {
-  apiUrl: 'https://melaine-palaeobiologic-savourily.ngrok-free.dev/api',
+  apiUrl: 'http://localhost:4000/api',
   productsApiUrl: 'https://fakestoreapi.com',
 };

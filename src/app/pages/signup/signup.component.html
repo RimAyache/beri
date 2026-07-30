@@ -39,6 +39,12 @@
 
       <div class="field-row">
         <div class="field">
+          <input type="text" formControlName="username" placeholder="Username" />
+          @if (signupForm.controls.username.invalid && (signupForm.controls.username.touched || submitted())) {
+            <p class="error-text">Username is required</p>
+          }
+        </div>
+        <div class="field">
           <input type="email" formControlName="email" placeholder="Email Address" />
           @if (signupForm.controls.email.invalid && (signupForm.controls.email.touched || submitted())) {
             <p class="error-text">
@@ -50,19 +56,21 @@
             </p>
           }
         </div>
-        <div class="field">
-          <input type="tel" formControlName="phone" placeholder="Phone Number" />
-          @if (signupForm.controls.phone.invalid && (signupForm.controls.phone.touched || submitted())) {
-            <p class="error-text">Phone number is required</p>
-          }
-        </div>
       </div>
 
       <div class="field-row">
         <div class="field">
           <input type="password" formControlName="password" placeholder="Password" />
           @if (signupForm.controls.password.invalid && (signupForm.controls.password.touched || submitted())) {
-            <p class="error-text">Password is required</p>
+            <p class="error-text">
+              @if (signupForm.controls.password.hasError('required')) {
+                Password is required
+              } @else {
+                Password must be at least 6 characters
+              }
+            </p>
+          } @else {
+            <p class="field-hint">At least 6 characters</p>
           }
         </div>
         <div class="field">
@@ -74,6 +82,10 @@
           }
         </div>
       </div>
+
+      @if (registerError()) {
+        <p class="error-text form-error">{{ registerError() }}</p>
+      }
 
       <button type="submit" class="btn-primary">Create Account</button>
       <p class="switch-link">

@@ -8,8 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { AuthService } from '../../core/auth/auth.service';
+
+const MIN_PASSWORD_LENGTH = 6;
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('password')?.value;
@@ -31,9 +34,9 @@ export class SignupComponent {
     {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      phone: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]),
       confirmPassword: new FormControl('', [Validators.required]),
     },
     { validators: passwordsMatchValidator },
@@ -51,18 +54,32 @@ export class SignupComponent {
       return;
     }
 
-    const { firstName, lastName, email, phone, password } = this.signupForm.getRawValue();
+    const { firstName, lastName, username, email, password } = this.signupForm.getRawValue();
     this.authService
       .register({
         firstName: firstName ?? '',
         lastName: lastName ?? '',
+        username: username ?? '',
         email: email ?? '',
-        phone: phone ?? '',
         password: password ?? '',
       })
       .subscribe({
         next: () => this.router.navigate(['/login']),
-        error: () => this.registerError.set('Something went wrong creating your account. Please try again.'),
+        error: (error: HttpErrorResponse) => this.registerError.set(this.extractErrorMessage(error)),
       });
+  }
+
+  private extractErrorMessage(error: HttpErrorResponse): string {
+    const body = error.error;
+
+    if (Array.isArray(body?.errors) && body.errors.length > 0) {
+      return body.errors.join(' ');
+    }
+
+    if (typeof body?.message === 'string') {
+      return body.message;
+    }
+
+    return 'Something went wrong creating your account. Please try again.';
   }
 }

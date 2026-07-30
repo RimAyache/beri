@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 
 import { config } from '../../config';
 import { Product } from '../../models/product.model';
@@ -39,8 +39,10 @@ export class CartService {
     return this.http
       .post<CartItemResponse>(`${config.apiUrl}/cart`, { productId: product.id, quantity })
       .pipe(
-        tap(() => {
+        tap(() => this.setLocalQuantity(product, quantity)),
+        catchError(() => {
           this.setLocalQuantity(product, quantity);
+          return of({ productId: product.id, quantity });
         }),
       );
   }

@@ -122,6 +122,18 @@
   font-size: 0.8rem;
 }
 
+.field-hint {
+  margin: 0.35rem 0 0;
+  color: #9d9d9d;
+  font-size: 0.8rem;
+}
+
+.form-error {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .btn-primary {
   width: 100%;
   padding: 1rem;

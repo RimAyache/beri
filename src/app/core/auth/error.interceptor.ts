@@ -13,7 +13,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status === 401) {
         authService.clearUserData();
         router.navigateByUrl('/login');
-      } else if (error.status === 404) {
+      } else if (error.status === 404 && req.method === 'GET') {
         router.navigateByUrl('/not-found');
       }
 
