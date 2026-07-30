@@ -45,29 +45,24 @@
   font-weight: 600;
 }
 
-.toolbar {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
 .search-input {
-  flex: 1;
-  padding: 0.6rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.85rem;
   border: 1px solid var(--color-border);
-  border-radius: 4px;
+  border-radius: 8px;
   font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
 }
 
-.sort-select {
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  font-family: var(--font-body);
+.search-input:focus {
+  border-color: var(--color-accent);
 }
 
 .results h1 {
   font-family: var(--font-display);
+  margin-top: 0;
 }
 
 .product-list {
@@ -80,6 +75,12 @@
 
 .product-list li {
   display: flex;
+}
+
+/* Without this the card only takes its content width inside the flex item. */
+.product-list li app-product-card {
+  flex: 1;
+  min-width: 0;
 }
 
 .pagination {

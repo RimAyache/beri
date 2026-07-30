@@ -1,6 +1,26 @@
+:host {
+  display: block;
+}
+
+.admin-page__header {
+  margin-bottom: 1.5rem;
+}
+
+.admin-page__title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  margin: 0 0 0.35rem;
+}
+
+.admin-page__subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
 .admin-grid {
   width: 100%;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 12rem);
 }
 
 .admin-grid__grid {

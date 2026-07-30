@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+
+.page {
+  display: block;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 2rem var(--layout-gutter) 3rem;
+  box-sizing: border-box;
+}

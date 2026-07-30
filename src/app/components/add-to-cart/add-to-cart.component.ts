@@ -1,5 +1,6 @@
 import { Component, inject, input, output, signal } from '@angular/core';
 
+import { config } from '../../config';
 import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../core/cart/cart.service';
 import { ToastService } from '../../core/toast/toast.service';
@@ -10,8 +11,6 @@ export interface AddToCartEvent {
   quantity: number;
 }
 
-const MAX_QUANTITY = 10;
-
 @Component({
   selector: 'app-add-to-cart',
   templateUrl: './add-to-cart.component.html',
@@ -20,6 +19,8 @@ const MAX_QUANTITY = 10;
 export class AddToCartComponent {
   product = input.required<Product>();
   disabled = input(false);
+
+  showAddButton = input(false);
 
   addToCart = output<AddToCartEvent>();
 
@@ -38,7 +39,11 @@ export class AddToCartComponent {
   }
 
   isDecrementDisabled(): boolean {
-    return this.disabled() || this.unavailable();
+    return this.disabled() || this.unavailable() || this.quantity() === 0;
+  }
+
+  isAddDisabled(): boolean {
+    return this.disabled() || this.unavailable() || this.quantity() === 0;
   }
 
   increment(): void {
@@ -53,10 +58,13 @@ export class AddToCartComponent {
     }
 
     this.quantity.update((q) => q + 1);
-    this.cartService.addItem(this.product(), this.quantity()).subscribe();
-    this.addToCart.emit({ product: this.product(), quantity: this.quantity() });
 
-    if (this.quantity() >= MAX_QUANTITY) {
+    if (!this.showAddButton()) {
+      this.pushToCart(this.quantity());
+      this.addToCart.emit({ product: this.product(), quantity: this.quantity() });
+    }
+
+    if (this.quantity() >= config.cart.maxQuantityPerItem) {
       this.maxReached.set(true);
       this.toastService.show('You have reached the maximum number of items.');
     }
@@ -69,5 +77,28 @@ export class AddToCartComponent {
 
     this.quantity.update((q) => Math.max(0, q - 1));
     this.maxReached.set(false);
+  }
+
+  /** Commits the picked quantity to the cart, then resets the stepper to 0. */
+  addSelectedToCart(): void {
+    if (this.isAddDisabled()) {
+      return;
+    }
+
+    const selected = this.quantity();
+    const alreadyInCart = this.cartService.getQuantity(this.product().id);
+    const total = Math.min(alreadyInCart + selected, config.cart.maxQuantityPerItem);
+
+    this.pushToCart(total);
+    this.addToCart.emit({ product: this.product(), quantity: selected });
+
+    this.quantity.set(0);
+    this.maxReached.set(false);
+  }
+
+  private pushToCart(quantity: number): void {
+    this.cartService
+      .addItem(this.product(), quantity)
+      .subscribe(() => this.cartService.openMiniCart());
   }
 }

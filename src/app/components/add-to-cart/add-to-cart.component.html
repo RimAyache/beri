@@ -1,19 +1,37 @@
 @if (isLoggedIn()) {
-  <div class="add-to-cart">
-    @if (quantity() === 0) {
-      <button type="button" class="quantity-btn" (click)="increment()" [disabled]="isIncrementDisabled()">
-        +
-      </button>
-    } @else {
+  @if (showAddButton()) {
+    <div class="add-to-cart add-to-cart--stacked">
       <div class="quantity-controls">
-        <button type="button" class="quantity-btn" (click)="decrement()" [disabled]="isDecrementDisabled()">
+        <button type="button" class="quantity-btn" (click)="decrement()" [disabled]="isDecrementDisabled()" aria-label="Decrease quantity">
           -
         </button>
         <span class="quantity-value">{{ quantity() }}</span>
-        <button type="button" class="quantity-btn" (click)="increment()" [disabled]="isIncrementDisabled()">
+        <button type="button" class="quantity-btn" (click)="increment()" [disabled]="isIncrementDisabled()" aria-label="Increase quantity">
           +
         </button>
       </div>
-    }
-  </div>
+
+      <button type="button" class="add-to-cart-btn" (click)="addSelectedToCart()" [disabled]="isAddDisabled()">
+        Add to Cart
+      </button>
+    </div>
+  } @else {
+    <div class="add-to-cart">
+      @if (quantity() === 0) {
+        <button type="button" class="quantity-btn" (click)="increment()" [disabled]="isIncrementDisabled()">
+          +
+        </button>
+      } @else {
+        <div class="quantity-controls">
+          <button type="button" class="quantity-btn" (click)="decrement()" [disabled]="isDecrementDisabled()">
+            -
+          </button>
+          <span class="quantity-value">{{ quantity() }}</span>
+          <button type="button" class="quantity-btn" (click)="increment()" [disabled]="isIncrementDisabled()">
+            +
+          </button>
+        </div>
+      }
+    </div>
+  }
 }

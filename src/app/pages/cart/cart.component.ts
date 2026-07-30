@@ -2,9 +2,8 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { config } from '../../config';
 import { CartService } from '../../core/cart/cart.service';
-
-const GIFT_WRAP_PRICE = 10;
 
 @Component({
   selector: 'app-cart',
@@ -20,10 +19,10 @@ export class CartComponent {
 
   /* Gift wrap is display-only, same as the mini-cart's — nothing persists it. */
   protected readonly giftWrap = signal(false);
-  protected readonly giftWrapPrice = GIFT_WRAP_PRICE;
+  protected readonly giftWrapPrice = config.cart.giftWrapPrice;
 
   protected readonly total = computed(
-    () => this.subtotal() + (this.giftWrap() ? GIFT_WRAP_PRICE : 0),
+    () => this.subtotal() + (this.giftWrap() ? config.cart.giftWrapPrice : 0),
   );
 
   protected lineTotal(price: number, quantity: number): number {

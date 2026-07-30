@@ -1,22 +1,16 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { map, of, switchMap } from 'rxjs';
 
 import { AddToCartComponent } from '../../components/add-to-cart/add-to-cart.component';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
+import { config } from '../../config';
 import { ProductService } from '../../services/product';
-
-const STAR_COUNT = 5;
-const RELATED_PRODUCTS_LIMIT = 4;
-const DISCOUNT_PERCENT = 20;
-const STOCK_BAR_REFERENCE = 50;
-const DEMO_COUNTDOWN = '05:23:47';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CurrencyPipe, RouterLink, AddToCartComponent, ProductCardComponent],
+  imports: [CurrencyPipe, AddToCartComponent, ProductCardComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
@@ -40,7 +34,7 @@ export class ProductDetailComponent {
       map((products) =>
         products
           .filter((product) => product.id !== this.productId())
-          .slice(0, RELATED_PRODUCTS_LIMIT),
+          .slice(0, config.productDetail.relatedProductsLimit),
       ),
     ),
     { initialValue: [] },
@@ -51,21 +45,26 @@ export class ProductDetailComponent {
 
   protected readonly originalPrice = computed(() => {
     const product = this.product();
-    return product ? product.price / (1 - DISCOUNT_PERCENT / 100) : 0;
+    return product
+      ? product.price / (1 - config.productDetail.discountPercent / config.percentMax)
+      : 0;
   });
 
   protected readonly stockBarWidth = computed(() => {
     const quantity = this.product()?.quantity ?? 0;
-    return Math.min(100, (quantity / STOCK_BAR_REFERENCE) * 100);
+    return Math.min(
+      config.percentMax,
+      (quantity / config.productDetail.stockBarReference) * config.percentMax,
+    );
   });
 
-  protected readonly discountPercent = DISCOUNT_PERCENT;
-  protected readonly countdown = DEMO_COUNTDOWN;
+  protected readonly discountPercent = config.productDetail.discountPercent;
+  protected readonly countdown = config.productDetail.demoCountdown;
 
-  readonly stars = Array.from({ length: STAR_COUNT }, (_, i) => i);
+  readonly stars = Array.from({ length: config.rating.starCount }, (_, i) => i);
 
   protected starFillPercent(rate: number, index: number): number {
-    return Math.min(100, Math.max(0, (rate - index) * 100));
+    return Math.min(config.percentMax, Math.max(0, (rate - index) * config.percentMax));
   }
 
   protected selectSize(size: string): void {

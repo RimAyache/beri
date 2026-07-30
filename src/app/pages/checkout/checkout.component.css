@@ -3,24 +3,8 @@
 }
 
 .checkout {
-  padding: 2rem 1.5rem;
   max-width: 1100px;
   margin: 0 auto;
-}
-
-.breadcrumb {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  margin-bottom: 1.5rem;
-}
-
-.breadcrumb a {
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.breadcrumb a:hover {
-  color: var(--color-accent);
 }
 
 .checkout__title {

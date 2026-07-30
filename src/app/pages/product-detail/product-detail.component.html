@@ -1,9 +1,5 @@
 @if (product(); as product) {
   <div class="product-detail">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a routerLink="/">Home</a> / <a routerLink="/shop">Shop</a> / <span>{{ product.title }}</span>
-    </nav>
-
     <div class="product-main">
       <div class="gallery">
         <img [src]="product.image" [alt]="product.title" class="gallery__image" />
@@ -83,7 +79,12 @@
           </div>
         }
 
-        <app-add-to-cart [product]="product" [disabled]="!product.available" class="info__add-to-cart" />
+        <app-add-to-cart
+          [product]="product"
+          [disabled]="!product.available"
+          [showAddButton]="true"
+          class="info__add-to-cart"
+        />
 
         <div class="info__note">
           <p>Estimated delivery: 3–5 business days.</p>

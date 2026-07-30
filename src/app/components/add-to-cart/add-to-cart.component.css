@@ -4,10 +4,21 @@
   gap: 0.75rem;
 }
 
+.add-to-cart--stacked {
+  gap: 1rem;
+}
+
 .quantity-controls {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.add-to-cart--stacked .quantity-controls {
+  gap: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.6rem;
 }
 
 .quantity-btn {
@@ -17,6 +28,18 @@
   background: #fff;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.add-to-cart--stacked .quantity-btn {
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.add-to-cart--stacked .quantity-btn:not(:disabled):hover {
+  color: var(--color-accent);
 }
 
 .quantity-btn:disabled,
@@ -37,4 +60,17 @@
   background: var(--color-accent);
   color: var(--color-bg);
   cursor: pointer;
+}
+
+.add-to-cart--stacked .add-to-cart-btn {
+  flex: 1;
+  padding: 0.85rem 2rem;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.add-to-cart--stacked .add-to-cart-btn:not(:disabled):hover {
+  background: var(--color-accent-light);
 }

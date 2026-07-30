@@ -3,11 +3,9 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
+import { config } from '../../config';
 import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../core/cart/cart.service';
-
-const FREE_SHIPPING_THRESHOLD = 75;
-const SHIPPING_FEE = 10;
 
 @Component({
   selector: 'app-checkout',
@@ -24,7 +22,7 @@ export class CheckoutComponent {
   protected readonly subtotal = this.cartService.subtotal;
 
   protected readonly shipping = computed(() =>
-    this.subtotal() >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE,
+    this.subtotal() >= config.cart.freeShippingThreshold ? 0 : config.cart.shippingFee,
   );
   protected readonly total = computed(() => this.subtotal() + this.shipping());
 

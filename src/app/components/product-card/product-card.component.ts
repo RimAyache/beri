@@ -3,9 +3,8 @@ import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
+import { config } from '../../config';
 import { Product } from '../../models/product.model';
-
-const STAR_COUNT = 5;
 
 @Component({
   selector: 'app-product-card',
@@ -16,10 +15,10 @@ const STAR_COUNT = 5;
 export class ProductCardComponent {
   product = input.required<Product>();
 
-  readonly stars = Array.from({ length: STAR_COUNT }, (_, i) => i);
+  readonly stars = Array.from({ length: config.rating.starCount }, (_, i) => i);
 
   starFillPercent(index: number): number {
     const rate = this.product().rating?.rate ?? 0;
-    return Math.min(100, Math.max(0, (rate - index) * 100));
+    return Math.min(config.percentMax, Math.max(0, (rate - index) * config.percentMax));
   }
 }

@@ -21,7 +21,7 @@ export class NavbarComponent {
     this.authService.logout().subscribe();
   }
 
-  onCartToggle(): void {
-    this.cartService.toggleMiniCart();
+  onCartOpen(): void {
+    this.cartService.closeMiniCart();
   }
 }

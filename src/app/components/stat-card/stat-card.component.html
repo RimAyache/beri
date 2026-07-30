@@ -4,7 +4,7 @@
     <span class="stat-card__value">{{ value() }}</span>
     <svg
       class="stat-card__sparkline"
-      viewBox="0 0 100 30"
+      [attr.viewBox]="sparklineViewBox"
       preserveAspectRatio="none"
       aria-hidden="true"
     >

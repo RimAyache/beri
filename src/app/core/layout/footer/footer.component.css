@@ -3,7 +3,10 @@
 }
 
 .footer {
-  padding: 1.5rem 3rem 2rem;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 1.5rem var(--layout-gutter) 2rem;
+  box-sizing: border-box;
 }
 
 .footer__separator {

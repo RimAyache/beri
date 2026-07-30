@@ -1,19 +1,14 @@
 <section class="hero">
-  <div class="hero__banner hero__banner--sale">
-    <p class="hero__eyebrow">Ultimate Sale</p>
-    <h2 class="hero__title">New Collection</h2>
-    <a routerLink="/shop" class="hero__cta">Shop Now</a>
-  </div>
-  <div class="hero__banner hero__banner--accent">
-    <p class="hero__eyebrow">Ultimate Sale</p>
-    <h2 class="hero__title">New Collection</h2>
-    <a routerLink="/shop" class="hero__cta">Shop Now</a>
-  </div>
-  <div class="hero__banner hero__banner--dark">
-    <p class="hero__eyebrow">Ultimate Sale</p>
-    <h2 class="hero__title">New Collection</h2>
-    <a routerLink="/shop" class="hero__cta">Shop Now</a>
-  </div>
+  @for (banner of heroBanners(); track banner.title) {
+    <div class="hero__banner" [class]="'hero__banner--' + banner.modifier">
+      @if (banner.image) {
+        <img [src]="banner.image" alt="" class="hero__thumb" />
+      }
+      <p class="hero__eyebrow">{{ banner.eyebrow }}</p>
+      <h2 class="hero__title">{{ banner.title }}</h2>
+      <a routerLink="/shop" class="hero__cta">Shop Now</a>
+    </div>
+  }
 </section>
 
 <section class="featured">
@@ -48,8 +43,10 @@
 <section class="instagram">
   <h2 class="instagram__heading">Follow Us On Instagram</h2>
   <div class="instagram__strip">
-    @for (tile of [1, 2, 3, 4, 5]; track tile) {
-      <div class="instagram__tile"></div>
+    @for (tile of galleryImages(); track tile.id) {
+      <a [routerLink]="['/products', tile.id]" class="instagram__tile">
+        <img [src]="tile.image" [alt]="tile.title" class="instagram__image" />
+      </a>
     }
   </div>
 </section>
@@ -65,7 +62,7 @@
   </div>
   <div class="trust-badge">
     <span class="trust-badge__title">Free Shipping</span>
-    <span class="trust-badge__desc">Order over $75</span>
+    <span class="trust-badge__desc">Order over {{ freeShippingThreshold | currency }}</span>
   </div>
   <div class="trust-badge">
     <span class="trust-badge__title">24/7 Support</span>

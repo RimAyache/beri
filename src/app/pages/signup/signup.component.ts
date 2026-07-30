@@ -10,9 +10,8 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { config } from '../../config';
 import { AuthService } from '../../core/auth/auth.service';
-
-const MIN_PASSWORD_LENGTH = 6;
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('password')?.value;
@@ -36,7 +35,10 @@ export class SignupComponent {
       lastName: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(config.auth.minPasswordLength),
+      ]),
       confirmPassword: new FormControl('', [Validators.required]),
     },
     { validators: passwordsMatchValidator },

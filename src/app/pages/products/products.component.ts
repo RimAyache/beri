@@ -1,36 +1,31 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
+import { PriceBucket, config } from '../../config';
 import { ProductService } from '../../services/product';
-
-interface PriceBucket {
-  label: string;
-  min: number;
-  max: number | null;
-}
 
 type SortOption = 'default' | 'price-asc' | 'price-desc' | 'rating';
 
-const PAGE_SIZE = 9;
-
-const PRICE_BUCKETS: PriceBucket[] = [
-  { label: 'Under $25', min: 0, max: 25 },
-  { label: '$25 - $50', min: 25, max: 50 },
-  { label: '$50 - $100', min: 50, max: 100 },
-  { label: '$100 & Above', min: 100, max: null },
+const SORT_OPTIONS: { label: string; value: SortOption }[] = [
+  { label: 'Featured', value: 'default' },
+  { label: 'Price: Low to High', value: 'price-asc' },
+  { label: 'Price: High to Low', value: 'price-desc' },
+  { label: 'Top Rated', value: 'rating' },
 ];
 
 @Component({
   selector: 'app-products',
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, TitleCasePipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
 export class ProductsComponent {
   private readonly productService = inject(ProductService);
 
-  protected readonly priceBuckets = PRICE_BUCKETS;
+  protected readonly priceBuckets = config.shop.priceBuckets;
+  protected readonly sortOptions = SORT_OPTIONS;
 
   private readonly products = toSignal(this.productService.getProducts(), { initialValue: [] });
   protected readonly categories = toSignal(this.productService.getCategories(), {
@@ -83,7 +78,7 @@ export class ProductsComponent {
   });
 
   protected readonly totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.filteredProducts().length / PAGE_SIZE)),
+    Math.max(1, Math.ceil(this.filteredProducts().length / config.shop.pageSize)),
   );
 
   protected readonly pageNumbers = computed(() =>
@@ -92,8 +87,8 @@ export class ProductsComponent {
 
   protected readonly pagedProducts = computed(() => {
     const page = this.currentPage();
-    const start = (page - 1) * PAGE_SIZE;
-    return this.filteredProducts().slice(start, start + PAGE_SIZE);
+    const start = (page - 1) * config.shop.pageSize;
+    return this.filteredProducts().slice(start, start + config.shop.pageSize);
   });
 
   protected selectCategory(category: string | null): void {

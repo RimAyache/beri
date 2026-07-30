@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, switchMap, throwError } from 'rxjs';
+import { config } from '../../config';
 import { AuthService } from './auth.service';
 import { endpoint } from './endpoints';
 
@@ -18,7 +19,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && !isAuthEndpoint && !req.context.get(SKIP_REFRESH)) {
+      if (error.status === config.httpStatus.unauthorized && !isAuthEndpoint && !req.context.get(SKIP_REFRESH)) {
         return authService.refreshToken().pipe(
           switchMap((response) => {
             const retryReq = req.clone({
@@ -35,10 +36,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         );
       }
 
-      if (error.status === 401) {
+      if (error.status === config.httpStatus.unauthorized) {
         authService.clearUserData();
         router.navigateByUrl('/login');
-      } else if (error.status === 404 && req.method === 'GET') {
+      } else if (error.status === config.httpStatus.notFound && req.method === 'GET') {
         router.navigateByUrl('/not-found');
       }
 

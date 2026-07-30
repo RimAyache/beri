@@ -5,6 +5,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 import type { CellValueChangedEvent, ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { StatusChipRenderer } from './cell-renderers/statuschiprenderer.component';
 import { DeleteButtonRenderer } from './cell-renderers/delete-button-renderer.component';
+import { config } from '../../../config';
 import { ProductService } from '../../../services/product';
 import { Product } from '../../../models/product.model';
 
@@ -16,7 +17,10 @@ interface ProductRow {
   Status: 'Available' | 'Out of Stock';
 }
 
-const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+const currencyFormatter = new Intl.NumberFormat(config.locale.id, {
+  style: 'currency',
+  currency: config.locale.currency,
+});
 
 @Component({
   selector: 'app-admin-products',
@@ -28,13 +32,9 @@ export class AdminProductsComponent implements OnInit {
   private readonly productService = inject(ProductService);
 
   theme = themeQuartz.withParams({
-    accentColor: '#7b1e3b',
-    fontFamily: 'Poppins, sans-serif',
-    headerFontFamily: 'Volkhov, serif',
-    headerBackgroundColor: '#2e1118',
-    headerTextColor: '#ffffff',
-    borderRadius: 8,
-    wrapperBorderRadius: 8,
+    ...config.gridTheme,
+    borderRadius: config.admin.grid.borderRadius,
+    wrapperBorderRadius: config.admin.grid.borderRadius,
   });
 
   defaultColDef: ColDef<ProductRow> = {
@@ -43,9 +43,9 @@ export class AdminProductsComponent implements OnInit {
   };
 
   colDefs: ColDef<ProductRow>[] = [
-    { field: 'Id', maxWidth: 90 },
-    { field: 'Name', flex: 1 },
-    { field: 'Description', flex: 2, editable: true },
+    { field: 'Id', maxWidth: config.admin.grid.idColumnMaxWidth },
+    { field: 'Name', flex: config.admin.grid.nameColumnFlex },
+    { field: 'Description', flex: config.admin.grid.descriptionColumnFlex, editable: true },
     {
       field: 'Price',
       valueFormatter: (params: ValueFormatterParams<ProductRow, number>) =>
@@ -54,7 +54,7 @@ export class AdminProductsComponent implements OnInit {
     { field: 'Status', filter: true, cellRenderer: StatusChipRenderer },
     {
       headerName: '',
-      maxWidth: 100,
+      maxWidth: config.admin.grid.actionColumnMaxWidth,
       sortable: false,
       filter: false,
       cellRenderer: DeleteButtonRenderer,
@@ -63,7 +63,7 @@ export class AdminProductsComponent implements OnInit {
   ];
 
   pagination = true;
-  paginationPageSize = 10;
+  paginationPageSize = config.admin.gridPageSize;
 
   rowData = signal<ProductRow[]>([]);
 

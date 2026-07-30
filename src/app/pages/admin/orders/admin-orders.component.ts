@@ -4,6 +4,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridAngular } from 'ag-grid-angular';
 import type { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { OrderStatusChipRenderer } from './cell-renderers/order-status-chip-renderer.component';
+import { config } from '../../../config';
 import { OrderService } from '../../../services/order';
 import { Order } from '../../../models/order.model';
 
@@ -15,7 +16,10 @@ interface OrderRow {
   Status: 'Pending' | 'Completed' | 'Cancelled';
 }
 
-const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+const currencyFormatter = new Intl.NumberFormat(config.locale.id, {
+  style: 'currency',
+  currency: config.locale.currency,
+});
 
 @Component({
   selector: 'app-admin-orders',
@@ -27,13 +31,9 @@ export class AdminOrdersComponent implements OnInit {
   private readonly orderService = inject(OrderService);
 
   theme = themeQuartz.withParams({
-    accentColor: '#7b1e3b',
-    fontFamily: 'Poppins, sans-serif',
-    headerFontFamily: 'Volkhov, serif',
-    headerBackgroundColor: '#2e1118',
-    headerTextColor: '#ffffff',
-    borderRadius: 8,
-    wrapperBorderRadius: 8,
+    ...config.gridTheme,
+    borderRadius: config.admin.grid.borderRadius,
+    wrapperBorderRadius: config.admin.grid.borderRadius,
   });
 
   defaultColDef: ColDef<OrderRow> = {
@@ -42,9 +42,9 @@ export class AdminOrdersComponent implements OnInit {
   };
 
   colDefs: ColDef<OrderRow>[] = [
-    { field: 'Id', headerName: 'Order', maxWidth: 140 },
-    { field: 'Customer', flex: 1 },
-    { field: 'Date', maxWidth: 140 },
+    { field: 'Id', headerName: 'Order', maxWidth: config.admin.grid.orderIdColumnMaxWidth },
+    { field: 'Customer', flex: config.admin.grid.nameColumnFlex },
+    { field: 'Date', maxWidth: config.admin.grid.dateColumnMaxWidth },
     {
       field: 'Total',
       valueFormatter: (params: ValueFormatterParams<OrderRow, number>) =>
@@ -54,7 +54,7 @@ export class AdminOrdersComponent implements OnInit {
   ];
 
   pagination = true;
-  paginationPageSize = 10;
+  paginationPageSize = config.admin.gridPageSize;
 
   rowData = signal<OrderRow[]>([]);
 

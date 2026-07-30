@@ -12,6 +12,9 @@
 
   --font-display: 'Volkhov', serif;
   --font-body: 'Poppins', sans-serif;
+
+  --layout-max-width: 1280px;
+  --layout-gutter: 2.5rem;
 }
 
 body {

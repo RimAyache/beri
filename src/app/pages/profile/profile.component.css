@@ -3,24 +3,8 @@
 }
 
 .profile {
-  padding: 2rem 1.5rem;
   max-width: 600px;
   margin: 0 auto;
-}
-
-.breadcrumb {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  margin-bottom: 1.5rem;
-}
-
-.breadcrumb a {
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.breadcrumb a:hover {
-  color: var(--color-accent);
 }
 
 .profile__title {

@@ -31,8 +31,8 @@ export class CartService {
     this.isMiniCartOpen.set(false);
   }
 
-  toggleMiniCart(): void {
-    this.isMiniCartOpen.update((open) => !open);
+  getQuantity(productId: number): number {
+    return this.cartItems().get(productId)?.quantity ?? 0;
   }
 
   addItem(product: Product, quantity: number): Observable<CartItemResponse> {

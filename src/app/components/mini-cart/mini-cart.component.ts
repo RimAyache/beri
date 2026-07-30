@@ -2,10 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+import { config } from '../../config';
 import { CartService } from '../../core/cart/cart.service';
-
-const FREE_SHIPPING_THRESHOLD = 75;
-const GIFT_WRAP_PRICE = 10;
 
 @Component({
   selector: 'app-mini-cart',
@@ -21,12 +19,14 @@ export class MiniCartComponent {
   readonly subtotal = this.cartService.subtotal;
 
   readonly giftWrap = signal(false);
-  readonly giftWrapPrice = GIFT_WRAP_PRICE;
+  readonly giftWrapPrice = config.cart.giftWrapPrice;
 
   readonly amountToFreeShipping = computed(() =>
-    Math.max(0, FREE_SHIPPING_THRESHOLD - this.subtotal()),
+    Math.max(0, config.cart.freeShippingThreshold - this.subtotal()),
   );
-  readonly total = computed(() => this.subtotal() + (this.giftWrap() ? GIFT_WRAP_PRICE : 0));
+  readonly total = computed(
+    () => this.subtotal() + (this.giftWrap() ? config.cart.giftWrapPrice : 0),
+  );
 
   close(): void {
     this.cartService.closeMiniCart();
