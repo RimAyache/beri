@@ -1,0 +1,94 @@
+<div class="cart">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a routerLink="/">Home</a> / <span>Your Shopping Cart</span>
+  </nav>
+
+  <h1 class="cart__title">Your Shopping Cart</h1>
+
+  @if (items().length === 0) {
+    <div class="cart__empty">
+      <p>Your cart is empty.</p>
+      <a routerLink="/shop" class="cart__shop-link">Continue shopping</a>
+    </div>
+  } @else {
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th scope="col" class="cart-table__product">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col" class="cart-table__total">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items(); track item.product.id) {
+          <tr>
+            <td class="cart-table__product">
+              <div class="line-item">
+                <img [src]="item.product.image" [alt]="item.product.title" class="line-item__image" />
+                <div class="line-item__details">
+                  <a [routerLink]="['/products', item.product.id]" class="line-item__title">
+                    {{ item.product.title }}
+                  </a>
+                  <p class="line-item__category">{{ item.product.category }}</p>
+                  <button type="button" class="line-item__remove" (click)="remove(item.product.id)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td>{{ item.product.price | currency }}</td>
+            <td>
+              <div class="stepper">
+                <button
+                  type="button"
+                  (click)="decrement(item.product.id, item.quantity)"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span>{{ item.quantity }}</span>
+                <button
+                  type="button"
+                  (click)="increment(item.product.id, item.quantity)"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </td>
+            <td class="cart-table__total">
+              {{ lineTotal(item.product.price, item.quantity) | currency }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="cart__summary">
+      <label class="gift-wrap">
+        <input type="checkbox" [checked]="giftWrap()" (change)="toggleGiftWrap()" />
+        For {{ giftWrapPrice | currency }} please wrap the product
+      </label>
+
+      <div class="totals">
+        <div class="totals__row">
+          <span>Subtotal</span>
+          <span>{{ subtotal() | currency }}</span>
+        </div>
+        @if (giftWrap()) {
+          <div class="totals__row totals__row--muted">
+            <span>Gift wrap</span>
+            <span>{{ giftWrapPrice | currency }}</span>
+          </div>
+        }
+        <div class="totals__row totals__row--grand">
+          <span>Total</span>
+          <span>{{ total() | currency }}</span>
+        </div>
+
+        <a routerLink="/checkout" class="totals__checkout">Checkout</a>
+      </div>
+    </div>
+  }
+</div>
