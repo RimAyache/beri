@@ -38,6 +38,12 @@ export const routes: Routes = [
           import('./pages/checkout/checkout.component').then((m) => m.CheckoutComponent),
       },
       {
+        path: 'profile',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/profile/profile.component').then((m) => m.ProfileComponent),
+      },
+      {
         path: 'login',
         canActivate: [guestGuard],
         loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),

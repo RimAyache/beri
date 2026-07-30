@@ -1,0 +1,32 @@
+<div class="profile">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a routerLink="/">Home</a> / <span>My Account</span>
+  </nav>
+
+  <h1 class="profile__title">My Account</h1>
+
+  <div class="profile__card">
+    <div class="profile__avatar">{{ initials() }}</div>
+
+    <dl class="profile__details">
+      <div class="profile__row">
+        <dt>Name</dt>
+        <dd>{{ fullName() }}</dd>
+      </div>
+      <div class="profile__row">
+        <dt>Username</dt>
+        <dd>{{ user?.username ?? '—' }}</dd>
+      </div>
+      <div class="profile__row">
+        <dt>Email</dt>
+        <dd>{{ user?.email ?? '—' }}</dd>
+      </div>
+      @if (user?.createdAt) {
+        <div class="profile__row">
+          <dt>Member Since</dt>
+          <dd>{{ user?.createdAt | date: 'longDate' }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</div>

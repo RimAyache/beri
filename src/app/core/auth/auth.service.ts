@@ -35,7 +35,10 @@ getToken(): string | null {
 
 setToken(token: string, user?: IUser): void {
     this.cookieservice.set(this.tokenKey, token);
-    this.currentUser = user ?? this.decodeToken();
+    if (user) {
+        this.cookieservice.set(this.userKey, JSON.stringify(user));
+    }
+    this.currentUser = user ?? this.getUser();
     this.isLoggedIn.set(true);
 }
 
@@ -45,7 +48,8 @@ decodeToken(): IUser | undefined {
         return undefined;
     }
     try {
-        return jwtDecode<IUser>(token);
+        const payload = jwtDecode<{ userId: number; userEmail: string; userRole: string }>(token);
+        return { id: payload.userId, email: payload.userEmail, role: payload.userRole };
     } catch {
         return undefined;
     }
@@ -56,6 +60,14 @@ checkToken(): boolean {
 }
 
 getUser(): IUser | undefined {
+    const cached = this.cookieservice.get(this.userKey);
+    if (cached) {
+        try {
+            return JSON.parse(cached) as IUser;
+        } catch {
+            return this.decodeToken();
+        }
+    }
     return this.decodeToken();
 }
 
@@ -94,6 +106,7 @@ logout(): Observable<any> {
 
 clearUserData(): void {
     this.cookieservice.delete(this.tokenKey);
+    this.cookieservice.delete(this.userKey);
     this.currentUser = undefined;
     this.isLoggedIn.set(false);
 }
