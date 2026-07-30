@@ -1,9 +1,9 @@
 <article class="product-card">
-  <a [routerLink]="['/products', product.id]" class="product-card__link">
-    <img [src]="product.image" [alt]="product.title" class="product-card__image" />
+  <a [routerLink]="['/products', product().id]" class="product-card__link">
+    <img [src]="product().image" [alt]="product().title" class="product-card__image" />
 
     <div class="product-card__body">
-      <h3 class="product-card__title">{{ product.title }}</h3>
+      <h3 class="product-card__title">{{ product().title }}</h3>
 
       <div class="product-card__rating" aria-hidden="true">
         @for (star of stars; track star) {
@@ -19,12 +19,12 @@
             </span>
           </span>
         }
-        <span class="product-card__review-count">({{ product.rating.count }})</span>
+        <span class="product-card__review-count">({{ product().rating.count }})</span>
       </div>
 
-      <p class="product-card__price">{{ product.price | currency }}</p>
+      <p class="product-card__price">{{ product().price | currency }}</p>
     </div>
   </a>
 
-  <app-add-to-cart [product]="product" [disabled]="!product.available" class="product-card__add-to-cart" />
+  <app-add-to-cart [product]="product()" [disabled]="!product().available" class="product-card__add-to-cart" />
 </article>

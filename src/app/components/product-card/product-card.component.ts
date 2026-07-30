@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
@@ -14,12 +14,12 @@ const STAR_COUNT = 5;
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  @Input({ required: true }) product!: Product;
+  product = input.required<Product>();
 
   readonly stars = Array.from({ length: STAR_COUNT }, (_, i) => i);
 
   starFillPercent(index: number): number {
-    const rate = this.product.rating?.rate ?? 0;
+    const rate = this.product().rating?.rate ?? 0;
     return Math.min(100, Math.max(0, (rate - index) * 100));
   }
 }

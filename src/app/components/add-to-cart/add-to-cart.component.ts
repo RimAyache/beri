@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../core/cart/cart.service';
@@ -18,10 +18,10 @@ const MAX_QUANTITY = 10;
   styleUrl: './add-to-cart.component.css',
 })
 export class AddToCartComponent {
-  @Input({ required: true }) product!: Product;
-  @Input() disabled = false;
+  product = input.required<Product>();
+  disabled = input(false);
 
-  @Output() addToCart = new EventEmitter<AddToCartEvent>();
+  addToCart = output<AddToCartEvent>();
 
   private authService = inject(AuthService);
   private cartService = inject(CartService);
@@ -34,11 +34,11 @@ export class AddToCartComponent {
   private unavailable = signal(false);
 
   isIncrementDisabled(): boolean {
-    return this.disabled || this.unavailable() || this.maxReached();
+    return this.disabled() || this.unavailable() || this.maxReached();
   }
 
   isDecrementDisabled(): boolean {
-    return this.disabled || this.unavailable();
+    return this.disabled() || this.unavailable();
   }
 
   increment(): void {
@@ -46,15 +46,15 @@ export class AddToCartComponent {
       return;
     }
 
-    if (!this.product.available) {
+    if (!this.product().available) {
       this.unavailable.set(true);
       this.toastService.show('This item is no longer available.');
       return;
     }
 
     this.quantity.update((q) => q + 1);
-    this.cartService.addItem(this.product, this.quantity()).subscribe();
-    this.addToCart.emit({ product: this.product, quantity: this.quantity() });
+    this.cartService.addItem(this.product(), this.quantity()).subscribe();
+    this.addToCart.emit({ product: this.product(), quantity: this.quantity() });
 
     if (this.quantity() >= MAX_QUANTITY) {
       this.maxReached.set(true);
