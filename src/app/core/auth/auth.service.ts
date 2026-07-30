@@ -34,9 +34,9 @@ getToken(): string | null {
 }
 
 setToken(token: string, user?: IUser): void {
-    this.cookieservice.set(this.tokenKey, token);
+    this.cookieservice.set(this.tokenKey, token, undefined, '/');
     if (user) {
-        this.cookieservice.set(this.userKey, JSON.stringify(user));
+        this.cookieservice.set(this.userKey, JSON.stringify(user), undefined, '/');
     }
     this.currentUser = user ?? this.getUser();
     this.isLoggedIn.set(true);
@@ -81,7 +81,7 @@ login(
         return this.http.post<{token: string; user: IUser}>(`${this.baseUrl}${endpoint.login}`, { email, password }).pipe(
             tap((response) => {
                 this.setToken(response.token, response.user);
-                this.router.navigate(['/']);
+                this.router.navigate([response.user.role === 'admin' ? '/admin/dashboard' : '/']);
             }),
             map((response) => response.token),
             catchError(() => of(undefined))
@@ -105,8 +105,8 @@ logout(): Observable<any> {
 }
 
 clearUserData(): void {
-    this.cookieservice.delete(this.tokenKey);
-    this.cookieservice.delete(this.userKey);
+    this.cookieservice.delete(this.tokenKey, '/');
+    this.cookieservice.delete(this.userKey, '/');
     this.currentUser = undefined;
     this.isLoggedIn.set(false);
 }
