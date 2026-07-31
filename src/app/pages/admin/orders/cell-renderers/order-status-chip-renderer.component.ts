@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import type { ICellRendererAngularComp as ICellRenderer } from 'ag-grid-angular';
 import type { ICellRendererParams } from 'ag-grid-community';
 
-import { OrderChipVariant } from '../../../../models/admin.model';
+import { OrderChipVariant } from '../../../../shared/interfaces/admin.interface';
 
 @Component({
   selector: 'app-order-status-chip-renderer',

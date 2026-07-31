@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { config } from '../../config';
-import { AboutEntry, AboutHighlight, AboutSkillGroup } from '../../models/about.model';
+import { config } from '../../shared/config';
+import { AboutEntry, AboutHighlight, AboutSkillGroup } from '../../shared/interfaces/about.interface';
 
 const EDUCATION: AboutEntry[] = [
   {

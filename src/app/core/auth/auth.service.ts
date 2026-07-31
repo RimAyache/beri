@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
-import { config } from '../../config';
-import { IUser } from '../../models/user.model';
-import { RegisterRequest, RegisterResponse, TokenPayload } from '../../models/auth.model';
-import { endpoint } from './endpoints';
+import { config } from '../config';
+import { IUser } from '../interfaces/user.interface';
+import { RegisterRequest, RegisterResponse, TokenPayload } from '../interfaces/auth.interface';
+import { endpoint } from '../constants/endpoints';
 
 @Injectable({
   providedIn: 'root'

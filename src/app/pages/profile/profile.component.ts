@@ -2,9 +2,9 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { AuthService } from '../../core/auth/auth.service';
-import { CustomerOrder } from '../../models/order.model';
-import { OrderService } from '../../services/order';
+import { AuthService } from '../../shared/services/auth.service';
+import { CustomerOrder } from '../../shared/interfaces/order.interface';
+import { OrderService } from '../../shared/services/order.service';
 
 @Component({
   selector: 'app-profile',

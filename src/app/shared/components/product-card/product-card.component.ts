@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
 import { config } from '../../config';
-import { Product } from '../../models/product.model';
+import { Product } from '../../interfaces/product.interface';
 
 @Component({
   selector: 'app-product-card',

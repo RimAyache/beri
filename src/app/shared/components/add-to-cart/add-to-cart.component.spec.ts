@@ -2,10 +2,10 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { render, screen, fireEvent } from '@testing-library/angular';
 
-import { AuthService } from '../../core/auth/auth.service';
-import { CartService } from '../../core/cart/cart.service';
-import { ToastService } from '../../core/toast/toast.service';
-import { Product } from '../../models/product.model';
+import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
+import { ToastService } from '../../services/toast.service';
+import { Product } from '../../interfaces/product.interface';
 import { AddToCartComponent } from './add-to-cart.component';
 
 describe('AddToCartComponent', () => {

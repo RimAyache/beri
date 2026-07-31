@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { config } from '../../config';
-import { FaqSection } from '../../models/faq.model';
+import { config } from '../../shared/config';
+import { FaqSection } from '../../shared/interfaces/faq.interface';
 
 const FAQ_SECTIONS: FaqSection[] = [
   {

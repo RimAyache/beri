@@ -10,8 +10,8 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { config } from '../../config';
-import { AuthService } from '../../core/auth/auth.service';
+import { config } from '../../shared/config';
+import { AuthService } from '../../shared/services/auth.service';
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('password')?.value;

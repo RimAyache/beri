@@ -2,7 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { CartService } from '../../core/cart/cart.service';
+import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-cart',

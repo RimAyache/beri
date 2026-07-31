@@ -4,10 +4,10 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridAngular } from 'ag-grid-angular';
 import type { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { OrderStatusChipRenderer } from './cell-renderers/order-status-chip-renderer.component';
-import { config } from '../../../config';
-import { OrderService } from '../../../services/order';
-import { OrderRow } from '../../../models/admin.model';
-import { Order } from '../../../models/order.model';
+import { config } from '../../../shared/config';
+import { OrderService } from '../../../shared/services/order.service';
+import { OrderRow } from '../../../shared/interfaces/admin.interface';
+import { Order } from '../../../shared/interfaces/order.interface';
 
 const currencyFormatter = new Intl.NumberFormat(config.locale.id, {
   style: 'currency',

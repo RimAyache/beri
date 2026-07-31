@@ -3,7 +3,7 @@ import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { config } from '../../config';
-import { CartService } from '../../core/cart/cart.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-mini-cart',

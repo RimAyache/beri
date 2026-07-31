@@ -2,10 +2,10 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { ProductCardComponent } from '../../components/product-card/product-card.component';
-import { config } from '../../config';
-import { PriceBucket, SortChoice, SortOption } from '../../models/shop.model';
-import { ProductService } from '../../services/product';
+import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { config } from '../../shared/config';
+import { PriceBucket, SortChoice, SortOption } from '../../shared/interfaces/shop.interface';
+import { ProductService } from '../../shared/services/product.service';
 
 const SORT_OPTIONS: SortChoice[] = [
   { label: 'Featured', value: 'default' },

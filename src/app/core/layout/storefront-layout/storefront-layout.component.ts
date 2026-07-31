@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { MiniCartComponent } from '../../components/mini-cart/mini-cart.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
+import { MiniCartComponent } from '../../../shared/components/mini-cart/mini-cart.component';
 
 @Component({
   selector: 'app-storefront-layout',

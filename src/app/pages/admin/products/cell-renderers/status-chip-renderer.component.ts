@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import type { ICellRendererAngularComp as ICellRenderer } from 'ag-grid-angular';
 import type { ICellRendererParams } from 'ag-grid-community';
 
-import { ProductChipVariant } from '../../../../models/admin.model';
+import { ProductChipVariant } from '../../../../shared/interfaces/admin.interface';
 
 @Component({
-  selector: 'app-statuschiprenderer',
-  templateUrl: './statuschiprenderer.component.html',
-  styleUrl: './statuschiprenderer.component.css',
+  selector: 'app-status-chip-renderer',
+  templateUrl: './status-chip-renderer.component.html',
+  styleUrl: './status-chip-renderer.component.css',
 })
 export class StatusChipRenderer implements ICellRenderer {
   label = '';

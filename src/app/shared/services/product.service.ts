@@ -3,8 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { config } from '../config';
-import { Product, ProductExtras } from '../models/product.model';
-import productsData from '../products.json';
+import { Product, ProductExtras } from '../interfaces/product.interface';
+import productsData from '../data/products.json';
 
 const PRODUCT_EXTRAS: Record<number, ProductExtras> = Object.fromEntries(
   productsData.map(({ id, quantity, colors, sizes }) => [id, { quantity, colors, sizes }]),

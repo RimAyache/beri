@@ -2,8 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { config } from '../../config';
-import { AuthService } from '../../core/auth/auth.service';
+import { config } from '../../shared/config';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-support',

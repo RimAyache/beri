@@ -1,9 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 
-import { StatCardComponent } from '../../../components/stat-card/stat-card.component';
-import { OrderService } from '../../../services/order';
-import { DashboardStat, Order } from '../../../models/order.model';
+import { StatCardComponent } from '../../../shared/components/stat-card/stat-card.component';
+import { OrderService } from '../../../shared/services/order.service';
+import { DashboardStat, Order } from '../../../shared/interfaces/order.interface';
 
 @Component({
   selector: 'app-admin-dashboard',

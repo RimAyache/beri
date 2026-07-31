@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { StorefrontLayoutComponent } from './core/layout/storefront-layout.component';
-import { AdminLayoutComponent } from './core/layout/admin-layout.component';
+import { StorefrontLayoutComponent } from './core/layout/storefront-layout/storefront-layout.component';
+import { AdminLayoutComponent } from './core/layout/admin-layout/admin-layout.component';
 import { authGuard } from './core/auth/auth.guard';
 import { guestGuard } from './core/auth/guest.guard';
 import { adminGuard } from './core/auth/admin.guard';

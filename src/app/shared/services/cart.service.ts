@@ -2,9 +2,9 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
 
-import { config } from '../../config';
-import { Product } from '../../models/product.model';
-import { CartItem, CartItemResponse, CartVariant } from '../../models/cart.model';
+import { config } from '../config';
+import { Product } from '../interfaces/product.interface';
+import { CartItem, CartItemResponse, CartVariant } from '../interfaces/cart.interface';
 
 @Injectable({
   providedIn: 'root',

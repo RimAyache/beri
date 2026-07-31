@@ -4,11 +4,11 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
-import { ProductCardComponent } from '../../components/product-card/product-card.component';
-import { config } from '../../config';
-import { ICategoryPill, IHeroBanner } from '../../models/home.model';
-import { Product } from '../../models/product.model';
-import { ProductService } from '../../services/product';
+import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { config } from '../../shared/config';
+import { ICategoryPill, IHeroBanner } from '../../shared/interfaces/home.interface';
+import { Product } from '../../shared/interfaces/product.interface';
+import { ProductService } from '../../shared/services/product.service';
 
 const CATEGORIES: ICategoryPill[] = [
   { label: "Men's Fashion", category: "men's clothing" },

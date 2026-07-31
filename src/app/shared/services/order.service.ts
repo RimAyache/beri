@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { CustomerOrder, DashboardStat, Order } from '../models/order.model';
+import { CustomerOrder, DashboardStat, Order } from '../interfaces/order.interface';
 
 const MOCK_STATS: DashboardStat[] = [
   { label: 'Revenue', value: '$7,825', trend: 22, sparkline: [4, 6, 5, 8, 7, 9, 11] },

@@ -1,6 +1,6 @@
 import type { ICellRendererParams } from 'ag-grid-community';
 
-import { OrderStatus } from './order.model';
+import { OrderStatus } from './order.interface';
 
 export interface ProductRow {
   Id: number;

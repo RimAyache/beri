@@ -3,12 +3,12 @@ import { AllCommunityModule, ModuleRegistry, themeQuartz } from 'ag-grid-communi
 ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridAngular } from 'ag-grid-angular';
 import type { CellValueChangedEvent, ColDef, ValueFormatterParams } from 'ag-grid-community';
-import { StatusChipRenderer } from './cell-renderers/statuschiprenderer.component';
+import { StatusChipRenderer } from './cell-renderers/status-chip-renderer.component';
 import { DeleteButtonRenderer } from './cell-renderers/delete-button-renderer.component';
-import { config } from '../../../config';
-import { ProductService } from '../../../services/product';
-import { ProductRow } from '../../../models/admin.model';
-import { Product } from '../../../models/product.model';
+import { config } from '../../../shared/config';
+import { ProductService } from '../../../shared/services/product.service';
+import { ProductRow } from '../../../shared/interfaces/admin.interface';
+import { Product } from '../../../shared/interfaces/product.interface';
 
 const currencyFormatter = new Intl.NumberFormat(config.locale.id, {
   style: 'currency',

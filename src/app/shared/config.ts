@@ -1,4 +1,4 @@
-import { PriceBucket } from './models/shop.model';
+import { PriceBucket } from './interfaces/shop.interface';
 
 export const config = {
   apiUrl: 'http://localhost:4000/api',

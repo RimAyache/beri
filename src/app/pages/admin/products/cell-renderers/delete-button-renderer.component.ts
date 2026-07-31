@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import type { ICellRendererAngularComp as ICellRenderer } from 'ag-grid-angular';
 
-import { DeleteButtonParams } from '../../../../models/admin.model';
+import { DeleteButtonParams } from '../../../../shared/interfaces/admin.interface';
 
 @Component({
   selector: 'app-delete-button-renderer',

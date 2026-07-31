@@ -3,9 +3,9 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { config } from '../../config';
-import { AuthService } from '../../core/auth/auth.service';
-import { CartService } from '../../core/cart/cart.service';
+import { config } from '../../shared/config';
+import { AuthService } from '../../shared/services/auth.service';
+import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
