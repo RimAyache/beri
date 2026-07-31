@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { render, screen, fireEvent } from '@testing-library/angular';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { CartService } from '../../services/cart.service';
 import { ToastService } from '../../services/toast.service';
 import { Product } from '../../interfaces/product.interface';

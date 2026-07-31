@@ -3,7 +3,7 @@ import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular
 import { Router } from '@angular/router';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { config } from '../../shared/config';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { endpoint } from '../../shared/constants/endpoints';
 
 export const SKIP_REFRESH = new HttpContextToken<boolean>(() => false);

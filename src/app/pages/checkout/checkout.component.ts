@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 
 import { config } from '../../shared/config';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { CartService } from '../../shared/services/cart.service';
 
 @Component({

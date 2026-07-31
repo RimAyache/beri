@@ -1,7 +1,7 @@
 import { Component, computed, inject, input, linkedSignal, output } from '@angular/core';
 
 import { config } from '../../config';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { CartService } from '../../services/cart.service';
 import { ToastService } from '../../services/toast.service';
 import { AddToCartEvent, CartVariant } from '../../interfaces/cart.interface';

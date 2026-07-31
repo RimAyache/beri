@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { CartService } from '../../../shared/services/cart.service';
 
 @Component({
