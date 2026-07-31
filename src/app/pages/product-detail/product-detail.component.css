@@ -182,7 +182,7 @@
 
 .related__list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
   gap: 1.5rem;
   list-style: none;
   padding: 0;
@@ -203,8 +203,36 @@
   padding: 3rem 0;
 }
 
+@media (max-width: 900px) {
+  .product-main {
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 720px) {
   .product-main {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery__image {
+    padding: 1rem;
+  }
+
+  .info__title {
+    font-size: 1.4rem;
+  }
+
+  .info__price {
+    font-size: 1.5rem;
+  }
+
+  .related {
+    margin-top: 2.5rem;
+  }
+
+  .related__list {
+    gap: 1rem;
   }
 }

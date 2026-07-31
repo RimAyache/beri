@@ -338,4 +338,13 @@
   .skills__label {
     width: auto;
   }
+
+  .profile,
+  .about__cta {
+    padding: 1.5rem;
+  }
+
+  .highlight {
+    padding: 1.25rem;
+  }
 }

@@ -4,7 +4,7 @@
 }
 
 .not-found h1 {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 12vw, 4rem);
   margin: 0;
 }
 

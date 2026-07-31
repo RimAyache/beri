@@ -96,3 +96,18 @@
 .product-card__add-to-cart {
   padding: 0 1rem 1rem;
 }
+
+@media (max-width: 600px) {
+  .product-card__image {
+    height: 160px;
+    padding: 0.75rem;
+  }
+
+  .product-card__body {
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  .product-card__add-to-cart {
+    padding: 0 0.75rem 0.75rem;
+  }
+}

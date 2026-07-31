@@ -16,8 +16,33 @@
   --layout-gutter: 2.5rem;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--color-text);
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+/* Every page container pads with --layout-gutter, so shrinking it here
+   reclaims horizontal space across the whole site at once. */
+@media (max-width: 900px) {
+  :root {
+    --layout-gutter: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --layout-gutter: 1rem;
+  }
 }

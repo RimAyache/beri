@@ -158,4 +158,8 @@
   .faq-item__answer {
     padding-right: 0;
   }
+
+  .faq__cta {
+    padding: 1.5rem;
+  }
 }

@@ -55,8 +55,8 @@
                 </div>
               </div>
             </td>
-            <td>{{ item.product.price | currency }}</td>
-            <td>
+            <td data-label="Price">{{ item.product.price | currency }}</td>
+            <td data-label="Quantity">
               <div class="stepper">
                 <button
                   type="button"
@@ -75,7 +75,7 @@
                 </button>
               </div>
             </td>
-            <td class="cart-table__total">
+            <td class="cart-table__total" data-label="Total">
               {{ lineTotal(item.product.price, item.quantity) | currency }}
             </td>
           </tr>

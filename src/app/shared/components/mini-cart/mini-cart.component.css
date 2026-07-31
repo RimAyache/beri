@@ -168,3 +168,18 @@
   text-decoration: underline;
   font-size: 0.9rem;
 }
+
+@media (max-width: 480px) {
+  .mini-cart {
+    padding: 1.25rem 1rem;
+  }
+
+  .mini-cart__title {
+    font-size: 1.25rem;
+  }
+
+  .mini-cart__item-image {
+    width: 56px;
+    height: 56px;
+  }
+}

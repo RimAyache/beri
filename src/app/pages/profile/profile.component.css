@@ -156,6 +156,22 @@
   color: #a3243a;
 }
 
+@media (max-width: 700px) {
+  .profile__title {
+    font-size: 1.5rem;
+  }
+
+  .profile__card {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .order {
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 500px) {
   .profile__card {
     flex-direction: column;

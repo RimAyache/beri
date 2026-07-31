@@ -174,3 +174,45 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+@media (max-width: 600px) {
+  .hero__banner {
+    min-height: 200px;
+    padding: 1.5rem;
+  }
+
+  .hero__thumb {
+    top: 1rem;
+    right: 1rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    padding: 0.5rem;
+  }
+
+  .hero__title {
+    font-size: 1.4rem;
+  }
+
+  .featured {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .featured__heading {
+    font-size: 1.5rem;
+  }
+
+  .featured__grid {
+    gap: 1rem;
+  }
+
+  .trust-badges {
+    padding: 2.5rem 0 1rem;
+  }
+}
+
+@media (max-width: 460px) {
+  .featured__grid,
+  .trust-badges {
+    grid-template-columns: 1fr;
+  }
+}

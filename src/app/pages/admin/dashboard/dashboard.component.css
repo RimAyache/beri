@@ -51,6 +51,11 @@
   color: #b3261e;
 }
 
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .orders-table {
   width: 100%;
   border-collapse: collapse;
@@ -73,4 +78,23 @@
 
 .orders-table tr:last-child td {
   border-bottom: none;
+}
+
+@media (max-width: 700px) {
+  .dashboard__title {
+    font-size: 1.5rem;
+  }
+
+  .dashboard__stats {
+    gap: 1rem;
+  }
+
+  .dashboard__card {
+    padding: 1.25rem 1rem;
+  }
+
+  /* Keep the columns legible and let the wrapper scroll instead. */
+  .orders-table {
+    min-width: 34rem;
+  }
 }
