@@ -18,3 +18,10 @@ export interface RegisterRequest {
 export interface RegisterResponse {
   id: number;
 }
+
+export interface TokenPayload {
+  userId: number;
+  userEmail: string;
+  userRole: string;
+    exp?: number;
+}

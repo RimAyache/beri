@@ -11,6 +11,7 @@ export const config = {
 
   auth: {
     minPasswordLength: 6,
+    fallbackToken: 60 * 60 * 1000,
   },
 
   cart: {
@@ -43,6 +44,7 @@ export const config = {
 
   time: {
     tickIntervalMs: 1000,
+    msPerSecond: 1000,
     secondsPerMinute: 60,
     minutesPerHour: 60,
     clockDigits: 2,

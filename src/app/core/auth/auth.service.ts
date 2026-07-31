@@ -6,7 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { config } from '../../config';
 import { IUser } from '../../models/user.model';
-import { RegisterRequest, RegisterResponse } from '../../models/auth.model';
+import { RegisterRequest, RegisterResponse, TokenPayload } from '../../models/auth.model';
 import { endpoint } from './endpoints';
 
 @Injectable({
@@ -21,25 +21,64 @@ export class AuthService {
     tokenKey = 'token';
     userKey = 'user';
 
-    currentUser: IUser | undefined = this.getUser();
-    isLoggedIn = signal<boolean>(this.checkToken());
+    currentUser: IUser | undefined;
+    isLoggedIn = signal<boolean>(false);
 
     constructor ()
     {
+        this.isLoggedIn.set(this.checkToken());
+        this.currentUser = this.getUser();
     }
 
 
+private readTokenCookie(): string | null {
+    return this.cookieservice.get(this.tokenKey) || null;
+}
+
+private decodePayload(token: string): TokenPayload | undefined {
+    try {
+        return jwtDecode<TokenPayload>(token);
+    } catch {
+        return undefined;
+    }
+}
+getTokenExpiry(): number | undefined {
+    const token = this.readTokenCookie();
+    const exp = token ? this.decodePayload(token)?.exp : undefined;
+    return exp === undefined ? undefined : exp * config.time.msPerSecond;
+}
+
+private isExpired(token: string): boolean {
+    const exp = this.decodePayload(token)?.exp;
+    return exp !== undefined && exp * config.time.msPerSecond <= Date.now();
+}
+private cookieExpiry(token: string): Date {
+    const exp = this.decodePayload(token)?.exp;
+    return exp === undefined
+        ? new Date(Date.now() + config.auth.fallbackToken)
+        : new Date(exp * config.time.msPerSecond);
+}
+
 getToken(): string | null {
- return this.cookieservice.get(this.tokenKey);
+    const token = this.readTokenCookie();
+    if (!token) {
+        return null;
+    }
+    if (this.isExpired(token)) {
+        this.clearUserData();
+        return null;
+    }
+    return token;
 }
 
 setToken(token: string, user?: IUser): void {
-    this.cookieservice.set(this.tokenKey, token, undefined, '/');
+    const expires = this.cookieExpiry(token);
+    this.cookieservice.set(this.tokenKey, token, expires, '/');
     if (user) {
-        this.cookieservice.set(this.userKey, JSON.stringify(user), undefined, '/');
+        this.cookieservice.set(this.userKey, JSON.stringify(user), expires, '/');
     }
     this.currentUser = user ?? this.getUser();
-    this.isLoggedIn.set(true);
+    this.isLoggedIn.set(this.checkToken());
 }
 
 decodeToken(): IUser | undefined {
@@ -47,12 +86,10 @@ decodeToken(): IUser | undefined {
     if (!token) {
         return undefined;
     }
-    try {
-        const payload = jwtDecode<{ userId: number; userEmail: string; userRole: string }>(token);
-        return { id: payload.userId, email: payload.userEmail, role: payload.userRole };
-    } catch {
-        return undefined;
-    }
+    const payload = this.decodePayload(token);
+    return payload
+        ? { id: payload.userId, email: payload.userEmail, role: payload.userRole }
+        : undefined;
 }
 
 checkToken(): boolean {
@@ -60,6 +97,9 @@ checkToken(): boolean {
 }
 
 getUser(): IUser | undefined {
+    if (!this.getToken()) {
+        return undefined;
+    }
     const cached = this.cookieservice.get(this.userKey);
     if (cached) {
         try {
