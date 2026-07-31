@@ -8,6 +8,7 @@ import { config } from '../../shared/config';
 import { IUser } from '../../shared/interfaces/user.interface';
 import { RegisterRequest, RegisterResponse, TokenPayload } from '../../shared/interfaces/auth.interface';
 import { endpoint } from '../../shared/constants/endpoints';
+import { CartService } from '../../shared/services/cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
     http=inject(HttpClient);
     cookieservice=inject(CookieService);
     router=inject(Router);
+    cartService=inject(CartService);
     baseUrl= config.apiUrl;
     tokenKey = 'token';
     userKey = 'user';
@@ -149,6 +151,7 @@ clearUserData(): void {
     this.cookieservice.delete(this.userKey, '/');
     this.currentUser = undefined;
     this.isLoggedIn.set(false);
+    this.cartService.clearCart();
 }
 
 }

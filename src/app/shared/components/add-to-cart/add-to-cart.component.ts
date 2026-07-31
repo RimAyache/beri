@@ -3,7 +3,6 @@ import { Component, computed, inject, input, linkedSignal, output } from '@angul
 import { config } from '../../config';
 import { AuthService } from '../../../core/auth/auth.service';
 import { CartService } from '../../services/cart.service';
-import { ToastService } from '../../services/toast.service';
 import { AddToCartEvent, CartVariant } from '../../interfaces/cart.interface';
 import { Product } from '../../interfaces/product.interface';
 
@@ -30,7 +29,6 @@ export class AddToCartComponent {
 
   private authService = inject(AuthService);
   private cartService = inject(CartService);
-  private toastService = inject(ToastService);
 
   readonly isLoggedIn = this.authService.isLoggedIn;
   
@@ -63,7 +61,6 @@ export class AddToCartComponent {
 
     if (!this.product().available) {
       this.unavailable.set(true);
-      this.toastService.show('This item is no longer available.');
       return;
     }
 
@@ -76,7 +73,6 @@ export class AddToCartComponent {
 
     if (this.quantity() >= config.cart.maxQuantityPerItem) {
       this.maxReached.set(true);
-      this.toastService.show('You have reached the maximum number of items.');
     }
   }
 

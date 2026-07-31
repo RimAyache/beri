@@ -4,7 +4,6 @@ import { render, screen, fireEvent } from '@testing-library/angular';
 
 import { AuthService } from '../../../core/auth/auth.service';
 import { CartService } from '../../services/cart.service';
-import { ToastService } from '../../services/toast.service';
 import { Product } from '../../interfaces/product.interface';
 import { AddToCartComponent } from './add-to-cart.component';
 
@@ -22,7 +21,6 @@ describe('AddToCartComponent', () => {
 
   async function renderComponent(options: { loggedIn?: boolean; product?: Product } = {}) {
     const cartService = { addItem: jasmine.createSpy('addItem').and.returnValue(of({})) };
-    const toastService = { show: jasmine.createSpy('show') };
     const authService = { isLoggedIn: signal(options.loggedIn ?? true) };
 
     await render(AddToCartComponent, {
@@ -30,11 +28,10 @@ describe('AddToCartComponent', () => {
       providers: [
         { provide: AuthService, useValue: authService },
         { provide: CartService, useValue: cartService },
-        { provide: ToastService, useValue: toastService },
       ],
     });
 
-    return { cartService, toastService };
+    return { cartService };
   }
 
   it('should not show the add to cart control when the user is not logged in', async () => {
@@ -76,19 +73,17 @@ describe('AddToCartComponent', () => {
     expect(screen.getByText('+')).toBeTruthy();
   });
 
-  it('should show a toast and disable + when the maximum number of items is reached', async () => {
-    const { toastService } = await renderComponent();
+  it('should disable + when the maximum number of items is reached', async () => {
+    await renderComponent();
     for (let i = 0; i < 10; i++) {
       fireEvent.click(screen.getByText('+'));
     }
-    expect(toastService.show).toHaveBeenCalled();
     expect((screen.getByText('+') as HTMLButtonElement).disabled).toBeTrue();
   });
 
-  it('should show a toast and disable the button when the item is no longer available', async () => {
-    const { toastService } = await renderComponent({ product: { ...mockProduct, available: false } });
+  it('should disable the button when the item is no longer available', async () => {
+    await renderComponent({ product: { ...mockProduct, available: false } });
     fireEvent.click(screen.getByText('+'));
-    expect(toastService.show).toHaveBeenCalled();
     expect((screen.getByText('+') as HTMLButtonElement).disabled).toBeTrue();
   });
 });
