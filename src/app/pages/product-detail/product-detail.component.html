@@ -1,0 +1,113 @@
+@if (product(); as product) {
+  <div class="product-detail">
+    <div class="product-main">
+      <div class="gallery">
+        <img [src]="product.image" [alt]="product.title" class="gallery__image" />
+      </div>
+
+      <div class="info">
+        <p class="info__category">{{ product.category }}</p>
+        <h1 class="info__title">{{ product.title }}</h1>
+
+        <div class="info__rating" aria-hidden="true">
+          @for (star of stars; track star) {
+            <span class="star">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star__icon star__icon--outline">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1.002l3.086 -6.253l3.086 6.253l6.9 1.002l-5 4.867l1.179 6.873z" />
+              </svg>
+              <span class="star__fill" [style.width.%]="starFillPercent(product.rating.rate, star)">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="star__icon star__icon--filled">
+                  <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1.002l3.086 -6.253l3.086 6.253l6.9 1.002l-5 4.867l1.179 6.873z" />
+                </svg>
+              </span>
+            </span>
+          }
+          <span class="info__review-count">({{ product.rating.count }} reviews)</span>
+        </div>
+
+        <div class="info__price-row">
+          <span class="info__price">{{ product.price | currency }}</span>
+          <span class="info__price-original">{{ originalPrice() | currency }}</span>
+          <span class="info__discount-badge">SAVE {{ discountPercent }}%</span>
+        </div>
+
+        <p class="info__countdown">Hurry up! Sale ends in <strong>{{ countdown() }}</strong></p>
+
+        @if (product.quantity !== undefined) {
+          <div class="stock">
+            <p class="stock__label">Only {{ product.quantity }} item(s) left in stock!</p>
+            <div class="stock__bar">
+              <div class="stock__bar-fill" [style.width.%]="stockBarWidth()"></div>
+            </div>
+          </div>
+        }
+
+        @if (product.sizes?.length) {
+          <div class="option-group">
+            <h3 class="option-group__label">Size</h3>
+            <div class="option-group__options">
+              @for (size of product.sizes; track size) {
+                <button
+                  type="button"
+                  class="option-pill"
+                  [class.active]="selectedSize() === size"
+                  (click)="selectSize(size)"
+                >
+                  {{ size }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        @if (product.colors?.length) {
+          <div class="option-group">
+            <h3 class="option-group__label">Color</h3>
+            <div class="option-group__options">
+              @for (color of product.colors; track color) {
+                <button
+                  type="button"
+                  class="option-pill"
+                  [class.active]="selectedColor() === color"
+                  (click)="selectColor(color)"
+                >
+                  {{ color }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <app-add-to-cart
+          [product]="product"
+          [disabled]="!product.available"
+          [showAddButton]="true"
+          [size]="selectedSize()"
+          [color]="selectedColor()"
+          class="info__add-to-cart"
+        />
+
+        <div class="info__note">
+          <p>Estimated delivery: 3–5 business days.</p>
+          <p>Free shipping &amp; free 30-day returns.</p>
+        </div>
+      </div>
+    </div>
+
+    @if (relatedProducts().length) {
+      <section class="related">
+        <h2 class="related__heading">People Also Loved</h2>
+        <ul class="related__list">
+          @for (related of relatedProducts(); track related.id) {
+            <li>
+              <app-product-card [product]="related" />
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </div>
+} @else {
+  <p class="loading">Loading product…</p>
+}

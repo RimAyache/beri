@@ -1,0 +1,16 @@
+<header class="admin-page__header">
+  <h1 class="admin-page__title">Products</h1>
+</header>
+
+<div class="admin-grid">
+  <ag-grid-angular
+    class="admin-grid__grid"
+    [theme]="theme"
+    [rowData]="rowData()"
+    [columnDefs]="colDefs"
+    [defaultColDef]="defaultColDef"
+    [pagination]="pagination"
+    [paginationPageSize]="paginationPageSize"
+    (cellValueChanged)="onCellValueChanged($event)"
+  />
+</div>

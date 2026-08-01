@@ -1,0 +1,48 @@
+
+:root {
+  --color-text: #2e1118;
+  --color-accent: #7b1e3b;
+  --color-accent-light: #c7295d;
+  --color-bg: #ffffff;
+  --color-border: #eee;
+  --color-muted: #838383;
+  --color-overlay: rgba(46, 17, 24, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.15);
+
+  --font-display: 'Volkhov', serif;
+  --font-body: 'Poppins', sans-serif;
+
+  --layout-max-width: 1280px;
+  --layout-gutter: 2.5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+/* Every page container pads with --layout-gutter, so shrinking it here
+   reclaims horizontal space across the whole site at once. */
+@media (max-width: 900px) {
+  :root {
+    --layout-gutter: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --layout-gutter: 1rem;
+  }
+}

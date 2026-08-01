@@ -1,0 +1,30 @@
+<article class="product-card">
+  <a [routerLink]="['/products', product().id]" class="product-card__link">
+    <img [src]="product().image" [alt]="product().title" class="product-card__image" />
+
+    <div class="product-card__body">
+      <h3 class="product-card__title">{{ product().title }}</h3>
+
+      <div class="product-card__rating" aria-hidden="true">
+        @for (star of stars; track star) {
+          <span class="product-card__star">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="product-card__star-icon product-card__star-icon--outline">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1.002l3.086 -6.253l3.086 6.253l6.9 1.002l-5 4.867l1.179 6.873z" />
+            </svg>
+            <span class="product-card__star-fill" [style.width.%]="starFillPercent(star)">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="product-card__star-icon product-card__star-icon--filled">
+                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1.002l3.086 -6.253l3.086 6.253l6.9 1.002l-5 4.867l1.179 6.873z" />
+              </svg>
+            </span>
+          </span>
+        }
+        <span class="product-card__review-count">({{ product().rating.count }})</span>
+      </div>
+
+      <p class="product-card__price">{{ product().price | currency }}</p>
+    </div>
+  </a>
+
+  <app-add-to-cart [product]="product()" [disabled]="!product().available" class="product-card__add-to-cart" />
+</article>

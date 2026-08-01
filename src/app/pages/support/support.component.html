@@ -1,0 +1,103 @@
+<div class="support">
+  <header class="support__header">
+    <p class="support__eyebrow">Support Centre</p>
+    <h1 class="support__title">How can we help?</h1>
+    <p class="support__intro">
+      Send us a message and we will reply {{ support.responseTime }}. If it is urgent, give us a
+      call — we would rather sort it out with you directly.
+    </p>
+  </header>
+
+  <div class="support__layout">
+    <section class="support__form-panel">
+      @if (messageSent()) {
+        <div class="support__sent">
+          <h2 class="support__sent-title">Your message is on its way</h2>
+          <p class="support__sent-text">
+            We have opened your mail app with the message addressed to {{ support.email }}. Send it
+            from there and our team will pick it up {{ support.responseTime }}.
+          </p>
+          <button type="button" class="support__secondary" (click)="writeAnother()">
+            Write another message
+          </button>
+        </div>
+      } @else {
+        <h2 class="support__form-title">Send us an email</h2>
+
+        <form class="support__form" [formGroup]="supportForm" (ngSubmit)="sendMessage()" novalidate>
+          <div class="field">
+            <label for="name" class="field__label">Your name</label>
+            <input id="name" type="text" formControlName="name"  />
+            @if (supportForm.controls.name.invalid && (supportForm.controls.name.touched || submitted())) {
+              <p class="error-text">Please tell us your name</p>
+            }
+          </div>
+
+          <div class="field">
+            <label for="email" class="field__label">Email address</label>
+            <input id="email" type="email" formControlName="email"/>
+            @if (supportForm.controls.email.invalid && (supportForm.controls.email.touched || submitted())) {
+              <p class="error-text">
+                @if (supportForm.controls.email.hasError('required')) {
+                  Email is required
+                } @else {
+                  Enter a valid email address
+                }
+              </p>
+            }
+          </div>
+
+          <div class="field">
+            <label for="subject" class="field__label">Subject</label>
+            <input
+              id="subject"
+              type="text"
+              formControlName="subject"
+              placeholder="Order #1234 — wrong size delivered"
+            />
+            @if (supportForm.controls.subject.invalid && (supportForm.controls.subject.touched || submitted())) {
+              <p class="error-text">A short subject helps us route your message</p>
+            }
+          </div>
+
+          <div class="field">
+            <label for="message" class="field__label">Message</label>
+            <textarea
+              id="message"
+              rows="6"
+              formControlName="message"
+              placeholder="Tell us what happened, and include your order number if you have one."
+            ></textarea>
+            @if (supportForm.controls.message.invalid && (supportForm.controls.message.touched || submitted())) {
+              <p class="error-text">Please write your message</p>
+            }
+          </div>
+
+          <button type="submit" class="support__submit">Send message</button>
+        </form>
+      }
+    </section>
+
+    <aside class="support__contact">
+      <div class="contact-card">
+        <p class="contact-card__label">Call us</p>
+        <a [href]="'tel:' + support.phone" class="contact-card__value">{{ support.phone }}</a>
+        <p class="contact-card__note">{{ support.hours }}</p>
+      </div>
+
+      <div class="contact-card">
+        <p class="contact-card__label">Email us</p>
+        <a [href]="'mailto:' + support.email" class="contact-card__value">{{ support.email }}</a>
+        <p class="contact-card__note">We reply {{ support.responseTime }}</p>
+      </div>
+
+      <div class="contact-card contact-card--muted">
+        <p class="contact-card__label">Looking for a quick answer?</p>
+        <p class="contact-card__note">
+          Delivery times, returns and payment questions are all covered in our FAQ.
+        </p>
+        <a routerLink="/faq" class="contact-card__link">Read the FAQ</a>
+      </div>
+    </aside>
+  </div>
+</div>

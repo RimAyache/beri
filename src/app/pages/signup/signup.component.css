@@ -1,0 +1,223 @@
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+}
+
+.auth-page {
+  display: flex;
+  max-width: 1100px;
+  margin: 2rem auto;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.auth-image {
+  flex: 1 1 45%;
+}
+
+.auth-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.auth-panel {
+  flex: 1 1 55%;
+  padding: 3rem;
+}
+
+.brand {
+  font-family: 'Volkhov', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #7b1e3b;
+  margin: 0 0 2rem;
+}
+
+.auth-panel h1 {
+  font-family: 'Volkhov', serif;
+  font-size: 1.5rem;
+  color: #7b1e3b;
+  margin: 0 0 1.5rem;
+}
+
+.oauth-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.oauth-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid #c7295d;
+  border-radius: 8px;
+  color: #7b1e3b;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.oauth-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #838383;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #838383;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding: 0.75rem 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  background: transparent;
+}
+
+.field input::placeholder {
+  color: #9d9d9d;
+}
+
+.error-text {
+  margin: 0.35rem 0 0;
+  color: #c0392b;
+  font-size: 0.8rem;
+}
+
+.field-hint {
+  margin: 0.35rem 0 0;
+  color: #9d9d9d;
+  font-size: 0.8rem;
+}
+
+.form-error {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 1rem;
+  background: #7b1e3b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.switch-link {
+  text-align: center;
+  color: #333;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.switch-link a {
+  color: #c7295d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* This route renders outside the storefront layout, so the card supplies
+   its own breathing room once it stops being centred on a wide canvas. */
+@media (max-width: 1100px) {
+  .auth-page {
+    margin: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .auth-page {
+    flex-direction: column;
+  }
+
+  .auth-image {
+    flex: none;
+  }
+
+  .auth-image img {
+    height: 220px;
+  }
+
+  .auth-panel {
+    flex: none;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth-page {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .auth-image {
+    display: none;
+  }
+
+  .auth-panel {
+    padding: 2rem 1rem;
+  }
+
+  .brand {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .oauth-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Single column: the row gap would double up with .field's margin. */
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

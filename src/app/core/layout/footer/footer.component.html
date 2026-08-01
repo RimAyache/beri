@@ -1,0 +1,14 @@
+<footer class="footer">
+  <hr class="footer__separator" />
+  <div class="footer__row">
+    <a routerLink="/" class="footer__brand">BERI</a>
+    <div class="footer__items">
+      <a routerLink="/about" class="footer__item footer__link">About</a>
+      <a routerLink="/support" class="footer__item footer__link">Support Center</a>
+      <a routerLink="/faq" class="footer__item footer__link">FAQ's</a>
+      @if (isLoggedIn()) {
+        <button type="button" class="footer__item footer__signout" (click)="onSignOut()">Sign out</button>
+      }
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,101 @@
+<div class="cart">
+  <h1 class="cart__title">Your Shopping Cart</h1>
+
+  @if (items().length === 0) {
+    <div class="cart__empty">
+      <p>Your cart is empty.</p>
+      <a routerLink="/shop" class="cart__shop-link">Continue shopping</a>
+    </div>
+  } @else {
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th scope="col" class="cart-table__product">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col" class="cart-table__total">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items(); track item.id) {
+          <tr>
+            <td class="cart-table__product">
+              <div class="line-item">
+                <img [src]="item.product.image" [alt]="item.product.title" class="line-item__image" />
+                <div class="line-item__details">
+                  <a [routerLink]="['/products', item.product.id]" class="line-item__title">
+                    {{ item.product.title }}
+                  </a>
+                  <p class="line-item__category">{{ item.product.category }}</p>
+                  @if (item.size || item.color) {
+                    <p class="line-item__variant">
+                      @if (item.size) {
+                        <span>Size: {{ item.size }}</span>
+                      }
+                      @if (item.color) {
+                        <span>Color: {{ item.color }}</span>
+                      }
+                    </p>
+                  }
+                  <button
+                    type="button"
+                    class="line-item__remove"
+                    (click)="remove(item.id)"
+                    aria-label="Remove item from cart"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="line-item__remove-icon" aria-hidden="true">
+                      <path d="M4 7h16" />
+                      <path d="M10 11v6" />
+                      <path d="M14 11v6" />
+                      <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                      <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                    </svg>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td data-label="Price">{{ item.product.price | currency }}</td>
+            <td data-label="Quantity">
+              <div class="stepper">
+                <button
+                  type="button"
+                  (click)="decrement(item.id, item.quantity)"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span>{{ item.quantity }}</span>
+                <button
+                  type="button"
+                  (click)="increment(item.id, item.quantity)"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </td>
+            <td class="cart-table__total" data-label="Total">
+              {{ lineTotal(item.product.price, item.quantity) | currency }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="cart__summary">
+      <div class="totals">
+        <div class="totals__row">
+          <span>Subtotal</span>
+          <span>{{ subtotal() | currency }}</span>
+        </div>
+        <div class="totals__row totals__row--grand">
+          <span>Total</span>
+          <span>{{ subtotal() | currency }}</span>
+        </div>
+
+        <a routerLink="/checkout" class="totals__checkout">Checkout</a>
+      </div>
+    </div>
+  }
+</div>

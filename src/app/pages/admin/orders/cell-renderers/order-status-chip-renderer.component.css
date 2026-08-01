@@ -1,0 +1,30 @@
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.status-chip--completed {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+}
+
+.status-chip--pending {
+  background-color: #fff4e5;
+  color: #b26a00;
+}
+
+.status-chip--cancelled {
+  background-color: #fdecea;
+  color: #c0392b;
+}
+
+.status-chip--neutral {
+  background-color: #eceff1;
+  color: #546e7a;
+}

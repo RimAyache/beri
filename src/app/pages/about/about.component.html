@@ -1,0 +1,171 @@
+<div class="about">
+  <header class="about__header">
+    <p class="about__eyebrow">About</p>
+    <h1 class="about__title">The person behind BERI</h1>
+    <p class="about__intro">
+      BERI is built and maintained by one person. Here is who that is, what she has studied and
+      the toolkit this store was put together with.
+    </p>
+  </header>
+
+  <section class="profile">
+    <div class="profile__avatar" aria-hidden="true">{{ initials }}</div>
+
+    <div class="profile__body">
+      <h2 class="profile__name">{{ owner.name }}</h2>
+      <p class="profile__role">{{ owner.role }}</p>
+
+      <ul class="profile__contact">
+        <li class="profile__contact-item">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="profile__icon"
+            aria-hidden="true"
+          >
+            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+            <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+          </svg>
+          {{ owner.location }}
+        </li>
+        <li class="profile__contact-item">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="profile__icon"
+            aria-hidden="true"
+          >
+            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+            <path d="M3 7l9 6l9 -6" />
+          </svg>
+          <a class="profile__link" [href]="'mailto:' + owner.email">{{ owner.email }}</a>
+        </li>
+      </ul>
+
+      <p class="profile__objective">
+        Highly driven Computer Engineering student with strong foundations in software
+        development, algorithms and systems design. Competitive programmer and full-merit scholar,
+        passionate about solving complex problems and building efficient, scalable software.
+      </p>
+    </div>
+  </section>
+
+  <section class="about__section">
+    <h2 class="about__section-title">Education</h2>
+
+    <ul class="entry-list">
+      @for (entry of education; track entry.title) {
+        <li class="entry">
+          <div class="entry__head">
+            <div>
+              <h3 class="entry__title">{{ entry.title }}</h3>
+              <p class="entry__subtitle">{{ entry.subtitle }}</p>
+            </div>
+            <div class="entry__meta">
+              <span class="entry__period">{{ entry.period }}</span>
+              @if (entry.location) {
+                <span class="entry__location">{{ entry.location }}</span>
+              }
+            </div>
+          </div>
+
+          <ul class="entry__details">
+            @for (detail of entry.details; track detail) {
+              <li>{{ detail }}</li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="about__section">
+    <h2 class="about__section-title">Experience</h2>
+
+    <ul class="entry-list">
+      @for (entry of experience; track entry.title) {
+        <li class="entry">
+          <div class="entry__head">
+            <div>
+              <h3 class="entry__title">{{ entry.title }}</h3>
+              <p class="entry__subtitle">{{ entry.subtitle }}</p>
+            </div>
+            <div class="entry__meta">
+              <span class="entry__period">{{ entry.period }}</span>
+              @if (entry.location) {
+                <span class="entry__location">{{ entry.location }}</span>
+              }
+            </div>
+          </div>
+
+          <ul class="entry__details">
+            @for (detail of entry.details; track detail) {
+              <li>{{ detail }}</li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="about__section">
+    <h2 class="about__section-title">Beyond the classroom</h2>
+
+    <div class="highlight-grid">
+      @for (highlight of highlights; track highlight.title) {
+        <article class="highlight">
+          <h3 class="highlight__title">{{ highlight.title }}</h3>
+          <ul class="highlight__details">
+            @for (detail of highlight.details; track detail) {
+              <li>{{ detail }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="about__section">
+    <h2 class="about__section-title">Technical skills</h2>
+
+    <dl class="skills">
+      @for (group of skillGroups; track group.label) {
+        <div class="skills__group">
+          <dt class="skills__label">{{ group.label }}</dt>
+          <dd class="skills__values">
+            @for (skill of group.skills; track skill) {
+              <span class="skills__chip">{{ skill }}</span>
+            }
+          </dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section class="about__section">
+    <h2 class="about__section-title">Soft skills</h2>
+
+    <ul class="soft-skills">
+      @for (skill of softSkills; track skill) {
+        <li class="soft-skills__item">{{ skill }}</li>
+      }
+    </ul>
+  </section>
+
+  <aside class="about__cta">
+    <h2 class="about__cta-title">Want to get in touch?</h2>
+    <p class="about__cta-text">
+      Questions about an order are answered fastest through the support centre. For anything else,
+      email {{ owner.email }} directly.
+    </p>
+    <a routerLink="/support" class="about__cta-link">Go to Support Centre</a>
+  </aside>
+</div>

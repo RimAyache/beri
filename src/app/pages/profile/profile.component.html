@@ -1,0 +1,78 @@
+<div class="profile">
+  <h1 class="profile__title">My Account</h1>
+
+  <div class="profile__card">
+    <div class="profile__avatar">{{ initials() }}</div>
+
+    <dl class="profile__details">
+      <div class="profile__row">
+        <dt>Name</dt>
+        <dd>{{ fullName() }}</dd>
+      </div>
+      <div class="profile__row">
+        <dt>Username</dt>
+        <dd>{{ user?.username ?? '—' }}</dd>
+      </div>
+      <div class="profile__row">
+        <dt>Email</dt>
+        <dd>{{ user?.email ?? '—' }}</dd>
+      </div>
+      @if (user?.createdAt) {
+        <div class="profile__row">
+          <dt>Member Since</dt>
+          <dd>{{ user?.createdAt | date: 'longDate' }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+
+  <section class="orders">
+    <h2 class="orders__title">Pending Orders</h2>
+
+    @if (pendingOrders().length) {
+      <ul class="orders__list">
+        @for (order of pendingOrders(); track order.id) {
+          <li class="order">
+            <div class="order__main">
+              <span class="order__id">{{ order.id }}</span>
+              <span class="order__meta">
+                {{ order.date | date: 'mediumDate' }} · {{ order.itemCount }} item(s)
+              </span>
+            </div>
+            <span class="order__total">{{ order.total | currency }}</span>
+            <span class="status-chip status-chip--{{ statusModifier(order.status) }}">
+              {{ order.status }}
+            </span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="orders__empty">You have no orders in progress.</p>
+    }
+  </section>
+
+  <section class="orders">
+    <h2 class="orders__title">Recent Orders</h2>
+
+    @if (recentOrders().length) {
+      <ul class="orders__list">
+        @for (order of recentOrders(); track order.id) {
+          <li class="order">
+            <div class="order__main">
+              <span class="order__id">{{ order.id }}</span>
+              <span class="order__meta">
+                {{ order.date | date: 'mediumDate' }} · {{ order.itemCount }} item(s)
+              </span>
+            </div>
+            <span class="order__total">{{ order.total | currency }}</span>
+            <span class="status-chip status-chip--{{ statusModifier(order.status) }}">
+              {{ order.status }}
+            </span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="orders__empty">You have not placed any orders yet.</p>
+    }
+  </section>
+</div>

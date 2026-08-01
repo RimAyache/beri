@@ -1,0 +1,175 @@
+<div class="checkout">
+  <h1 class="checkout__title">Checkout</h1>
+
+  @if (orderPlaced()) {
+    <div class="checkout__confirmation">
+      <p class="checkout__confirmation-title">Thank you! Your order has been placed.</p>
+      <p class="checkout__confirmation-note">A confirmation has been sent to your email.</p>
+      <button type="button" class="btn-primary" (click)="continueShopping()">Continue shopping</button>
+    </div>
+  } @else if (items().length === 0) {
+    <div class="checkout__empty">
+      <p>Your cart is empty.</p>
+      <a routerLink="/shop" class="checkout__shop-link">Continue shopping</a>
+    </div>
+  } @else {
+    <form class="checkout__layout" [formGroup]="checkoutForm" (ngSubmit)="payNow()" novalidate>
+      <div class="checkout__form">
+        <section class="checkout__section" formGroupName="contact">
+          <h2>Contact</h2>
+          <div class="field">
+            <input type="email" formControlName="email" placeholder="Email Address" />
+            @if (checkoutForm.controls.contact.controls.email.invalid && (checkoutForm.controls.contact.controls.email.touched || submitted())) {
+              <p class="error-text">
+                @if (checkoutForm.controls.contact.controls.email.hasError('required')) {
+                  Email is required
+                } @else {
+                  Enter a valid email address
+                }
+              </p>
+            }
+          </div>
+        </section>
+
+        <section class="checkout__section" formGroupName="delivery">
+          <h2>Delivery</h2>
+          <div class="field">
+            <input type="text" formControlName="country" placeholder="Country" />
+            @if (checkoutForm.controls.delivery.controls.country.invalid && (checkoutForm.controls.delivery.controls.country.touched || submitted())) {
+              <p class="error-text">Country is required</p>
+            }
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <input type="text" formControlName="firstName" placeholder="First Name" />
+              @if (checkoutForm.controls.delivery.controls.firstName.invalid && (checkoutForm.controls.delivery.controls.firstName.touched || submitted())) {
+                <p class="error-text">First name is required</p>
+              }
+            </div>
+            <div class="field">
+              <input type="text" formControlName="lastName" placeholder="Last Name" />
+              @if (checkoutForm.controls.delivery.controls.lastName.invalid && (checkoutForm.controls.delivery.controls.lastName.touched || submitted())) {
+                <p class="error-text">Last name is required</p>
+              }
+            </div>
+          </div>
+          <div class="field">
+            <input type="text" formControlName="address" placeholder="Address" />
+            @if (checkoutForm.controls.delivery.controls.address.invalid && (checkoutForm.controls.delivery.controls.address.touched || submitted())) {
+              <p class="error-text">Address is required</p>
+            }
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <input type="text" formControlName="city" placeholder="City" />
+              @if (checkoutForm.controls.delivery.controls.city.invalid && (checkoutForm.controls.delivery.controls.city.touched || submitted())) {
+                <p class="error-text">City is required</p>
+              }
+            </div>
+            <div class="field">
+              <input type="text" formControlName="postalCode" placeholder="Postal Code" />
+              @if (checkoutForm.controls.delivery.controls.postalCode.invalid && (checkoutForm.controls.delivery.controls.postalCode.touched || submitted())) {
+                <p class="error-text">Postal code is required</p>
+              }
+            </div>
+          </div>
+          <label class="checkbox-field">
+            <input type="checkbox" formControlName="saveInfo" />
+            Save this information for next time
+          </label>
+        </section>
+
+        <section class="checkout__section" formGroupName="payment">
+          <h2>Payment</h2>
+          <div class="field">
+            <label for="cardType" class="field__label">Payment method</label>
+            <select id="cardType" formControlName="cardType" class="select-field">
+              <option value="Visa">Visa</option>
+              <option value="Mastercard">Mastercard</option>
+              <option value="American Express">American Express</option>
+            </select>
+          </div>
+          <div class="field">
+            <input type="text" formControlName="cardNumber" placeholder="Card Number" />
+            @if (checkoutForm.controls.payment.controls.cardNumber.invalid && (checkoutForm.controls.payment.controls.cardNumber.touched || submitted())) {
+              <p class="error-text">Card number is required</p>
+            }
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <input type="text" formControlName="expiry" placeholder="MM/YY" />
+              @if (checkoutForm.controls.payment.controls.expiry.invalid && (checkoutForm.controls.payment.controls.expiry.touched || submitted())) {
+                <p class="error-text">Expiry date is required</p>
+              }
+            </div>
+            <div class="field">
+              <input type="text" formControlName="cvv" placeholder="CVV" />
+              @if (checkoutForm.controls.payment.controls.cvv.invalid && (checkoutForm.controls.payment.controls.cvv.touched || submitted())) {
+                <p class="error-text">CVV is required</p>
+              }
+            </div>
+          </div>
+          <div class="field">
+            <input type="text" formControlName="holderName" placeholder="Cardholder Name" />
+            @if (checkoutForm.controls.payment.controls.holderName.invalid && (checkoutForm.controls.payment.controls.holderName.touched || submitted())) {
+              <p class="error-text">Cardholder name is required</p>
+            }
+          </div>
+          <label class="checkbox-field">
+            <input type="checkbox" formControlName="saveInfo" />
+            Save this card for next time
+          </label>
+        </section>
+      </div>
+
+      <aside class="checkout__summary">
+        <h2>Order Summary</h2>
+        <ul class="summary-items">
+          @for (item of items(); track item.id) {
+            <li class="summary-item">
+              <img [src]="item.product.image" [alt]="item.product.title" class="summary-item__image" />
+              <div class="summary-item__details">
+                <p class="summary-item__title">{{ item.product.title }}</p>
+                <p class="summary-item__category">{{ item.product.category }}</p>
+                @if (item.size || item.color) {
+                  <p class="summary-item__variant">
+                    @if (item.size) {
+                      <span>Size: {{ item.size }}</span>
+                    }
+                    @if (item.color) {
+                      <span>Color: {{ item.color }}</span>
+                    }
+                  </p>
+                }
+                <p class="summary-item__qty">Qty {{ item.quantity }}</p>
+              </div>
+              <p class="summary-item__price">{{ item.product.price * item.quantity | currency }}</p>
+            </li>
+          }
+        </ul>
+
+        <div class="discount-row">
+          <input type="text" placeholder="Discount code" class="discount-input" />
+          <button type="button" class="discount-apply">Apply</button>
+        </div>
+
+        <div class="totals">
+          <div class="totals__row">
+            <span>Subtotal</span>
+            <span>{{ subtotal() | currency }}</span>
+          </div>
+          <div class="totals__row">
+            <span>Shipping</span>
+            <span>{{ shipping() === 0 ? 'Free' : (shipping() | currency) }}</span>
+          </div>
+          <div class="totals__row totals__row--grand">
+            <span>Total</span>
+            <span>{{ total() | currency }}</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary checkout__pay">Pay Now</button>
+      </aside>
+    </form>
+  }
+</div>

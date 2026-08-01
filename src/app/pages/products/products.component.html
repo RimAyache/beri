@@ -1,0 +1,119 @@
+<div class="shop">
+  <aside class="filters">
+    <h2>Filters</h2>
+
+    <section class="filter-group">
+      <h3>Search</h3>
+      <input
+        type="search"
+        class="search-input"
+        placeholder="Search for your next hit"
+        [value]="searchTerm()"
+        (input)="onSearchChange($any($event.target).value)"
+      />
+    </section>
+
+    <section class="filter-group">
+      <h3>Sort by</h3>
+      <ul class="filter-list">
+        @for (option of sortOptions; track option.value) {
+          <li>
+            <button
+              type="button"
+              class="filter-item"
+              [class.active]="sortBy() === option.value"
+              (click)="onSortChange(option.value)"
+            >
+              {{ option.label }}
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="filter-group">
+      <h3>Collections</h3>
+      <ul class="filter-list">
+        <li>
+          <button
+            type="button"
+            class="filter-item"
+            [class.active]="selectedCategory() === null"
+            (click)="selectCategory(null)"
+          >
+            All
+          </button>
+        </li>
+        @for (category of categories(); track category) {
+          <li>
+            <button
+              type="button"
+              class="filter-item"
+              [class.active]="selectedCategory() === category"
+              (click)="selectCategory(category)"
+            >
+              {{ category | titlecase }}
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="filter-group">
+      <h3>Prices</h3>
+      <ul class="filter-list">
+        <li>
+          <button
+            type="button"
+            class="filter-item"
+            [class.active]="selectedPriceBucket() === null"
+            (click)="selectPriceBucket(null)"
+          >
+            All
+          </button>
+        </li>
+        @for (bucket of priceBuckets; track bucket.label) {
+          <li>
+            <button
+              type="button"
+              class="filter-item"
+              [class.active]="selectedPriceBucket() === bucket"
+              (click)="selectPriceBucket(bucket)"
+            >
+              {{ bucket.label }}
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+  </aside>
+
+  <main class="results">
+    <h1>{{ (selectedCategory() | titlecase) ?? 'All Products' }}</h1>
+
+    <ul class="product-list">
+      @for (product of pagedProducts(); track product.id) {
+        <li>
+          <app-product-card [product]="product" />
+        </li>
+      } @empty {
+        <p>No products match your filters.</p>
+      }
+    </ul>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination" aria-label="Pagination">
+        @for (page of pageNumbers(); track page) {
+          <button
+            type="button"
+            class="page-button"
+            [class.active]="currentPage() === page"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+        }
+      </nav>
+    }
+  </main>
+</div>

@@ -1,0 +1,17 @@
+<div class="stat-card">
+  <span class="stat-card__label">{{ label() }}</span>
+  <div class="stat-card__row">
+    <span class="stat-card__value">{{ value() }}</span>
+    <svg
+      class="stat-card__sparkline"
+      [attr.viewBox]="sparklineViewBox"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <polyline [attr.points]="sparklinePoints()" />
+    </svg>
+  </div>
+  <span class="stat-card__trend" [class.stat-card__trend--down]="!isPositive()">
+    {{ isPositive() ? '+' : '' }}{{ trend() }}%
+  </span>
+</div>

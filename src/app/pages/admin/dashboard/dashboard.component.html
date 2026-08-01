@@ -1,0 +1,51 @@
+<div class="dashboard">
+  <h1 class="dashboard__title">Dashboard</h1>
+
+  <div class="dashboard__stats">
+    @for (stat of stats(); track stat.label) {
+      <app-stat-card
+        [label]="stat.label"
+        [value]="stat.value"
+        [trend]="stat.trend"
+        [sparkline]="stat.sparkline"
+      />
+    }
+  </div>
+
+  <section class="dashboard__card">
+    <h2 class="dashboard__card-title">Latest Orders</h2>
+    <div class="table-scroll">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of orders(); track order.id) {
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.customerName }}</td>
+              <td>{{ order.date }}</td>
+              <td>{{ order.total | currency }}</td>
+              <td>
+                <span
+                  class="status-chip"
+                  [class.status-chip--pending]="order.status === 'Pending'"
+                  [class.status-chip--completed]="order.status === 'Completed'"
+                  [class.status-chip--cancelled]="order.status === 'Cancelled'"
+                >
+                  {{ order.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
