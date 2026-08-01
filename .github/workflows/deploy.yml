@@ -25,6 +25,10 @@ jobs:
           node-version: 22
           cache: npm
 
+      # The lockfile is maintained by npm 11 locally; Node 22 ships npm 10,
+      # whose resolver rejects it ("Missing: chokidar ... from lock file").
+      - run: npm i -g npm@11
+
       - run: npm ci
 
       - name: Build
